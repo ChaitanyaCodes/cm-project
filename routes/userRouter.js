@@ -57,8 +57,31 @@ router.post('/login', async()=>{
     try{
         const {email, password} = req.body;
         // validate
-
-    } catch(err){
+        if(!email || !password)
+            return res
+                .status(400)
+                .json({errorMessage: "Please Enter All fields."});
+        const existingUser = await User.findOne({email});
+        if(!existingUser)
+            return res
+            .status(401)
+            .json({errorMessage: "Wrong email or password"});
+            
+            const correctPwd = await bcrypt.compare(password, existingUser.passwordHash);
+            if(!correctPwd)
+            return res
+            .status(401)
+            .json({errorMessage: "Wrong email or password"});
+        // log user
+        const token = jwt.sign({
+            user: existingUser._id
+        }.process.env.JWT_SECRET);
+        // Send the token in a HTTP-only cookie
+        res.cookie('token', token,{
+            httpOnly: true,
+        }).send();
+        
+        } catch(err){
         console.error(err);
         res.status(500).send();
     }
