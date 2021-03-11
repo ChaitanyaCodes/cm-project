@@ -5,11 +5,12 @@ const User = require('../models/usersModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// register
 router.post('/', async(req, res) => {
     try{
-        const {email, password} = req.body;
+        const {email, password, confirmPwd} = req.body;
         //validation
-        if(!email || !password)
+        if(!email || !password || !confirmPwd)
             return res
                 .status(400)
                 .json({errorMessage: "Please Enter All fields."});
@@ -18,6 +19,10 @@ router.post('/', async(req, res) => {
             .status(400)
             .json({errorMessage: "Please Enter Password of atleast 8 characters."});
             const existingUser = await User.findOne({email});
+        if(password !== confirmPwd)
+            return res
+                .status(400)
+                .json({errorMessage: "Please enter the same password twice"});
         if(existingUser)
             return res
                 .status(400)
@@ -47,4 +52,15 @@ router.post('/', async(req, res) => {
         res.status(500).send();
     }
 } );
+
+router.post('/login', async()=>{
+    try{
+        const {email, password} = req.body;
+        // validate
+
+    } catch(err){
+        console.error(err);
+        res.status(500).send();
+    }
+})
 module.exports = router;
