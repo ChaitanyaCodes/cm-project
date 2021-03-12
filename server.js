@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
 import userRoutes from './routes/users.js';
+import dotenv from 'dotenv';
 
 const __dirname = path.resolve();
 
@@ -14,17 +15,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname,"client","build")));
 app.use(express.static("public"));
 
-// app.get('*',(req,res) => {
-//   res.sendFile(__dirname,'client','index.html')
-// });
-
-// app.get("/", (req, res) => {
-//     res.sendFile(path.join(__dirname,"client", "public", "index.html"));
-//   });
-
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+process.on('uncaughtException', err => {
+    console.log('Unhandled Exception. Shutting Down');
+    console.log(err.name, err.message);
+    process.exit(1);
+  });
 
 const CONNECTION_URI = 'mongodb+srv://Livio30:Ready2go123@studentmanagement.uqabn.mongodb.net/CE?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5000;
@@ -33,6 +31,14 @@ mongoose.connect(CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: tr
     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
     .catch((error) => console.log(error.message));
 
-mongoose.set('useFindAndModify', false);
+    mongoose.set('useFindAndModify',false);
+
+    process.on('unhandledRejection', err => {
+        console.log(err.name, err.message);
+        console.log('Unhandled Rejection. Shutting Down');
+        server.close(() => {
+          process.exit(1);
+        });
+      });
 
 app.use('/auth', userRoutes);
