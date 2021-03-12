@@ -3,8 +3,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
-import userRoutes from './routes/users.js';
-import dotenv from 'dotenv';
+import userRoutes from './routes/userRouter.js';
+// import dotenv from 'dotenv';
 
 const __dirname = path.resolve();
 

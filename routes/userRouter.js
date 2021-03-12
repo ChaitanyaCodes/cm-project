@@ -1,15 +1,12 @@
-// password
-// <v'SJm:n.KFP3tFxyz+xuW7P6g8S,+n+_/Zq8dVN=aKW@6JmPN-TcVL/'L{eYeRA}p~RTrS@LH@F~WW,"AHm7e-,!Y{5Qk./H-CNfqUb(J)wt'Qj[s!''PC_2FTXvH@:qx{sXxpr}LaXdc^SCB-wdJ4[}V9(@)Mz8v/(_855MPNC:?7-*"<(uX=.8%~&}LkSvK"bJs+>4huXT/v*H=BY(e/fjXEMNkL4"XmS*z#gS68=&neQ}[M^JCy{f5_fS#cL
-const router = require('express').Router();
-const User = require('../models/usersModel');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
-// register
-router.post('/', async(req, res) => {
+import User from '../models/usersModel.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import express from 'express';
+const router = express.Router();
+router.post('/signup', async (req, res) => {
     try{
         const {email, password, confirmPwd} = req.body;
-        //validation
+        // signup validation
         if(!email || !password || !confirmPwd)
             return res
                 .status(400)
@@ -53,20 +50,20 @@ router.post('/', async(req, res) => {
     }
 } );
 
-router.post('/login', async()=>{
+router.post('/login', async (req, res)=>{
     try{
         const {email, password} = req.body;
-        // validate
+        // login validate
         if(!email || !password)
             return res
                 .status(400)
                 .json({errorMessage: "Please Enter All fields."});
         const existingUser = await User.findOne({email});
+        console.log(existingUser);
         if(!existingUser)
             return res
             .status(401)
-            .json({errorMessage: "Wrong email or password"});
-            
+            .json({errorMessage: "Wrong email or password"});   
             const correctPwd = await bcrypt.compare(password, existingUser.passwordHash);
             if(!correctPwd)
             return res
@@ -80,7 +77,6 @@ router.post('/login', async()=>{
         res.cookie('token', token,{
             httpOnly: true,
         }).send();
-        
         } catch(err){
         console.error(err);
         res.status(500).send();
@@ -94,4 +90,4 @@ router.get('/logout',(req, res)=>{
     }).send();
 });
 
-module.exports = router;
+export default router;
