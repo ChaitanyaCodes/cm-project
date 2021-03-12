@@ -25,7 +25,7 @@ process.on('uncaughtException', err => {
     console.log('Unhandled Exception. Shutting Down');
     console.log(err.name, err.message);
     process.exit(1);
-  });
+});
 
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URI = process.env.DB;
