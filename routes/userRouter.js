@@ -2,6 +2,9 @@ import User from '../models/usersModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import express from 'express';
+import dotenv from 'dotenv';
+
+dotenv.config();
 const router = express.Router();
 router.post('/signup', async (req, res) => {
     try{
@@ -76,7 +79,7 @@ router.post('/login', async (req,res)=>{
         // Send the token in a HTTP-only cookie
         res.cookie('token', token,{
             httpOnly: true,
-        }).send();
+        }).send('logged');
         } catch(err){
         console.error(err);
         res.status(500).send();
