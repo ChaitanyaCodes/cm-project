@@ -1,12 +1,34 @@
+import axios from "axios";
 import React, { Fragment, useState } from 'react';
 import '../../css/login.css';
 
 export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    async function login(e) {
+        e.preventDefault();
+    
+        try {
+          const loginData = {
+            email,
+            password
+          };
+    
+          await axios.post(
+            "http://localhost:5000/auth/login",
+            loginData
+          );
+        //   await getLoggedIn();
+        //   history.push("/");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
     return (
     <div className="bg-img">
-        <form className="form"> 
+        <form className="form" onSubmit={login}> 
             <div className="container">
                 <h2>sign in</h2>
                 <input
@@ -15,7 +37,7 @@ export default function Login(){
                     id="email"
                     placeholder="Email address"
                     required
-                    autofocus
+                    autoFocus
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                 />
