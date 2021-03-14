@@ -20,7 +20,10 @@ app.use(express.static("public"));
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  credentials: true,
+}));
 process.on('uncaughtException', err => {
     console.log('Unhandled Exception. Shutting Down');
     console.log(err.name, err.message);
