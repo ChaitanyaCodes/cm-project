@@ -5,7 +5,6 @@ import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import userRoutes from './routes/userRouter.js';
-import dashboard from './client/src/components/dashboard/Dashboard.js';
 import dotenv from 'dotenv';
 
 const __dirname = path.resolve();
@@ -50,4 +49,3 @@ mongoose.connect(CONNECTION_URI,
       });
 
 app.use('/auth', userRoutes);
-app.use('/dashboard', dashboard);
