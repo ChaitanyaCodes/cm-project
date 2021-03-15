@@ -18,7 +18,9 @@ export default function SignUp() {
       const signUpData = {
         email,
         password,
-        confirmPwd
+        confirmPwd,
+        fullName,
+        role
       };
 
       await axios.post(
@@ -51,7 +53,7 @@ export default function SignUp() {
           />
           <select name="cars" id="cars" onChange={(e) => setRole(e.target.options[e.target.selectedIndex].value)}
             value={role}>
-            <option default  disabled>Select your role</option>
+            <option value="none" defaultChecked hidden >Select your role</option>
             <option value="1">Student</option>
             <option value="2">Teacher</option>
             <option value="3">Admin</option>
