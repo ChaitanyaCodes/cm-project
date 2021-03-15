@@ -2,24 +2,19 @@ import React from 'react';
 import Login from './components/auth/login.js';
 import SignUp from './components/auth/SignUp.js';
 import Dashboard from './components/dashboard/Dashboard.js';
+import Router from './Router';
 import axios from 'axios';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { AuthContextProvider } from '../src/context/AuthContext';
 
 axios.defaults.withCredentials = true;
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/dashboard" component={Dashboard} />
-        </Switch>
-        
-      </div>
-    </Router>
-    
+    <AuthContextProvider>
+        <div className="App">
+          <Router />
+        </div>
+    </AuthContextProvider> 
   );
 }
 
