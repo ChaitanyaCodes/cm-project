@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './components/auth/login.js';
 import SignUp from './components/auth/SignUp.js';
+import Dashboard from './components/dashboard/Dashboard.js';
 import axios from 'axios';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/dashboard" component={Dashboard} />
         </Switch>
         
       </div>
