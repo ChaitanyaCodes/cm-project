@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import '../../css/login.css';
 import { Link } from 'react-router-dom';
 
@@ -21,8 +21,8 @@ export default function Login(){
             "http://localhost:5000/auth/login",
             loginData
           );
-        //   await getLoggedIn();
-        //   history.push("/");
+          await getLoggedIn();
+          history.push("/");
         } catch (err) {
           console.error(err);
         }
