@@ -8,7 +8,7 @@ dotenv.config();
 const router = express.Router();
 router.post('/signup', async (req, res) => {
     try{
-        const {email, password, confirmPwd} = req.body;
+        const {email, password, confirmPwd, fullName, role} = req.body;
         // signup validation
         if(!email || !password || !confirmPwd)
             return res
@@ -33,6 +33,8 @@ router.post('/signup', async (req, res) => {
 
         //save new user 
         const newUser = new User({
+            fullName,
+            role,
             email, 
             passwordHash,
         });
