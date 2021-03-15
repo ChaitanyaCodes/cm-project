@@ -102,7 +102,8 @@ router.get("/loggedIn", (req, res) => {
       if (!token) 
         return res.json(false);
   
-      jwt.verify(token, process.env.JWT_SECRET);
+      const verified = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = verified.user;
   
       res.send(true);
     } catch (err) {
