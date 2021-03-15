@@ -49,7 +49,9 @@ export default function SignUp() {
             onChange={(e) => setFullName(e.target.value)}
             value={fullName}
           />
-          <select name="cars" id="cars">
+          <select name="cars" id="cars" onChange={(e) => setRole(e.target.options[e.target.selectedIndex].value)}
+            value={role}>
+            <option default  disabled>Select your role</option>
             <option value="1">Student</option>
             <option value="2">Teacher</option>
             <option value="3">Admin</option>
@@ -68,7 +70,7 @@ export default function SignUp() {
           />
 
           <button type="submit">Register</button>
-          <Link to="/"><button type="submit">Login</button></Link>
+          <Link to="/login"><button type="submit">Login</button></Link>
           <p>Copyright <span>&copy;</span> 2021</p>
         </div>
       </form>
