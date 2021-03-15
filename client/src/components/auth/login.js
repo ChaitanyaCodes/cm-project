@@ -27,7 +27,7 @@ export default function Login(){
             loginData
           );
           await getLoggedIn();
-          history.push("/");
+          history.push("/dashboard");
         } catch (err) {
           console.error(err);
         }
