@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { Fragment, useState } from 'react';
 import '../../css/login.css';
+import { Link } from 'react-router-dom';
+
 
 export default function Login(){
     const [email, setEmail] = useState("");
@@ -50,8 +52,9 @@ export default function Login(){
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
                 />
-                
                 <button type="submit">Sign in</button>
+                <Link to="/signup"><button type="submit">Sign Up</button></Link>
+                
                 <p>Copyright <span>&copy;</span> 2021</p>
             </div>
         </form>
