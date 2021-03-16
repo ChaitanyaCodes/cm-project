@@ -1,36 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link , Redirect , Switch} from 'react-router-dom';
 import '../../css/dashboard.css';
+import AuthContext from "../../context/AuthContext";
+import LogOutBtn from '../auth/Loggout';
 
 
 export default function Dashboard() {
+  const { loggedIn } = useContext(AuthContext);
+
   return (
-    <div class="menu">
-      <div class="item">
-        <span class="fas fa-tachometer-alt"></span>
-        <p>Dashboard</p>
+    <div>
+      {loggedIn === false && (
+      <Switch>
+        <Redirect exact from="/dashboard" to="/" />
+      </Switch>
+    )}
+    {loggedIn === true && (
+      <>
+      <div className="menu">
+      <div className="item">
+        <span className="fas fa-tachometer-alt"></span>
+        <p>AICTE</p>
       </div>
-      <div class="item">
-        <span class="fas fa-user"></span>
-        <p>Users</p>
+      <div className="item">
+        <span className="fas fa-user"></span>
+        <p>STUDENTS</p>
       </div>
-      <div class="item">
-        <span class="fas fa-sitemap"></span>
-        <p>Site</p>
+      <div className="item">
+        <span className="fas fa-sitemap"></span>
+        <p><LogOutBtn/></p>
       </div>
-      <div class="item">
-        <span class="fas fa-dollar-sign"></span>
-        <p>Sales</p>
-      </div>
-      <div class="item">
-        <span class="fas fa-envelope"></span>
-        <p>Emails</p>
-      </div>
-      <div class="item">
-        <span class="fas fa-cogs"></span>
-        <p>Settings</p>
+      <div className="item">
+        <span className="fas fa-dollar-sign"></span>
+        <p>TEACHERS</p>
       </div>
     </div>
+      </>
+    )}
+    </div>
+    
+    
   );
 }
 
