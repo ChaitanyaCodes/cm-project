@@ -27,8 +27,8 @@ export default function SignUp() {
         "http://localhost:5000/auth/signup",
         signUpData
       );
-      // await getLoggedIn();
-      // history.push("/");
+      await getLoggedIn();
+      history.push("/");
     } catch (err) {
       console.error(err);
     }
