@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import '../../css/login.css';
 import { Link } from 'react-router-dom';
+
+import '../../css/login.css';
+import AuthContext from '../../context/AuthContext.js';
 
 
 export default function SignUp() {
@@ -10,6 +12,9 @@ export default function SignUp() {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+
+  const { getLoggedIn } = useContext(AuthContext);
+  const history = useHistory();
 
   async function register(e) {
     e.preventDefault();

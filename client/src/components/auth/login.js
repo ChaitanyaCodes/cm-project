@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import '../../css/login.css';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +8,9 @@ import { Link } from 'react-router-dom';
 export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const { getLoggedIn } = useContext(AuthContext);
+    const history = useHistory();
 
     async function login(e) {
         e.preventDefault();
