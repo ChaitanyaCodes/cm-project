@@ -11,19 +11,18 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/signup">
-          <SignUp/>
+      <Route exact path="/">
+          <Login/>
         </Route>
-        <Route path="/login">
-              <Login />
-          </Route>
         
         {loggedIn === false && (
           <>
+            <Route path="/login">
+              <Login />
+            </Route>
             <Route exact path="/signup">
               <SignUp />
             </Route>
-            
           </>
         )}
         {loggedIn === true && (
