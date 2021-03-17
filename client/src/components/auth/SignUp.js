@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useContext , useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
-
 import '../../css/login.css';
 import AuthContext from '../../context/AuthContext.js';
 
@@ -13,6 +12,7 @@ export default function SignUp() {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
+  const [key, setKey] = useState("");
 
   const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
@@ -25,6 +25,7 @@ export default function SignUp() {
         email,
         password,
         confirmPwd,
+        key,
         fullName,
         role
       };
@@ -44,42 +45,49 @@ export default function SignUp() {
     <div className="bg-img">
       <form onSubmit={register}>
       <div className="container">
-        <h2>SIGN UP</h2>
-          <input
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-          <input
-            type="text"
-            placeholder="Enter Full Name"
-            onChange={(e) => setFullName(e.target.value)}
-            value={fullName}
-          />
-          <select name="cars" id="cars" onChange={(e) => setRole(e.target.options[e.target.selectedIndex].value)}
+        <h2 >Sign Up</h2>
+        <select  className="s-my" name="cars" id="cars" onChange={(e) => setRole(e.target.options[e.target.selectedIndex].value)}
             value={role}>
             <option value="none" defaultChecked hidden >Select your role</option>
             <option value="1">Student</option>
             <option value="2">Teacher</option>
             <option value="3">Admin</option>
           </select>
+            <input className="s-my large"
+              type="email"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <input
+              type="text"
+              placeholder="Enter Full Name"
+              onChange={(e) => setFullName(e.target.value)}
+              value={fullName} className="s-my large"
+            />
+          
+          <div className="pass-container">
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password} className="s-my"
+            />
+            <input
+              type="password"
+              placeholder="Confirm password"
+              onChange={(e) => setConfirmPwd(e.target.value)}
+              value={confirmPwd} className="s-my "
+            />
+          </div>
           <input
             type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
+            placeholder="Confirm key"
+            onChange={(e) => setKey(e.target.value)}
+            value={key} className="s-my large"
           />
-          <input
-            type="password"
-            placeholder="Confirm password"
-            onChange={(e) => setConfirmPwd(e.target.value)}
-            value={confirmPwd}
-          />
-
-          <button type="submit">Register</button>
-          <Link to="/login"><button type="submit">Login</button></Link>
-          <p>Copyright <span>&copy;</span> 2021</p>
+          <button type="submit"  className="s-my-btn">Register</button>
+          <Link to="/login"><button type="submit" className="s-my-btn">Login</button></Link>
         </div>
       </form>
     </div>
