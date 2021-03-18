@@ -6,11 +6,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const router = express.Router();
+const teacherKey = "welcometeacher";
+const adminKey = "manager";
 router.post('/signup', async (req, res) => {
     try{
-        const {email, password, confirmPwd, fullName, role} = req.body;
+        const {email, password, confirmPwd, fullName, role, key} = req.body;
         // signup validation
-        if(!email || !password || !confirmPwd)
+        if(!email || !password || !confirmPwd || !key)
             return res
                 .status(400)
                 .json({errorMessage: "Please Enter All fields."});
@@ -18,7 +20,16 @@ router.post('/signup', async (req, res) => {
             return res
             .status(400)
             .json({errorMessage: "Please Enter Password of atleast 8 characters."});
-            const existingUser = await User.findOne({email});
+        if(role === 2 || key !== teacherKey)
+            return res
+            .status(400)
+            .json({errorMessage: "Wrong Key."});
+        if(role === 3 || key !== adminKey)
+            return res
+            .status(400)
+            .json({errorMessage: "Wrong Key."});
+
+        const existingUser = await User.findOne({email});
         if(password !== confirmPwd)
             return res
                 .status(400)
@@ -27,7 +38,7 @@ router.post('/signup', async (req, res) => {
             return res
                 .status(400)
                 .json({errorMessage: "User already exists."});
-        // Hash Password
+                        // Hash Password
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
 
@@ -40,7 +51,7 @@ router.post('/signup', async (req, res) => {
         });
         const savedUser = await newUser.save();
 
-        // log user
+        // // log user
         const token = jwt.sign({
             user: savedUser._id
         },process.env.JWT_SECRET);
