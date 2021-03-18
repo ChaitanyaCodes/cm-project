@@ -37,7 +37,7 @@ export default function Login(){
     <div className="bg-img">
         <form className="form" onSubmit={login}> 
             <div className="container">
-                <h2>sign in</h2>
+                <h2 className="s-my">Sign In</h2>
                 <input
                     type="email"
                     name="email"
@@ -47,6 +47,7 @@ export default function Login(){
                     autoFocus
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
+                    className="s-my large"
                 />
                 <input
                     type="password"
@@ -56,9 +57,10 @@ export default function Login(){
                     required
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
+                    className="s-my large"
                 />
-                <button type="submit">Sign in</button>
-                <Link to="/signup"><button type="submit">Sign Up</button></Link>
+                <button type="submit" className="s-my-btn">Sign in</button>
+                <Link to="/signup"><button type="submit" className="s-my-btn">Sign Up</button></Link>
                 
                 <p>Copyright <span>&copy;</span> 2021</p>
             </div>

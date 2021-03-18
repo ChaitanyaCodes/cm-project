@@ -19,6 +19,10 @@ export default function Dashboard() {
       <>
       <div className="menu">
       <div className="item">
+        <p>Dashboard</p>
+      </div>
+      <hr/>
+      <div className="item">
         <span className="fas fa-tachometer-alt"></span>
         <p>AICTE</p>
       </div>
@@ -27,12 +31,12 @@ export default function Dashboard() {
         <p>STUDENTS</p>
       </div>
       <div className="item">
-        <span className="fas fa-sitemap"></span>
-        <p><LogOutBtn/></p>
+        <span className="fas fa-chalkboard-teacher"></span>
+        <p>TEACHERS</p>
       </div>
       <div className="item">
-        <span className="fas fa-dollar-sign"></span>
-        <p>TEACHERS</p>
+        <span className="fas fa-sign-out-alt"></span>
+        <p><LogOutBtn/></p>
       </div>
     </div>
       </>
