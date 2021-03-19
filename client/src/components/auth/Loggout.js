@@ -22,5 +22,5 @@ export default function LogOutBtn() {
     history.push("/");
   }
 
-  return <button onClick={logOut} style={styles} >Log out</button>;
+  return <button onClick={logOut} style={styles} >LOG OUT</button>;
 }

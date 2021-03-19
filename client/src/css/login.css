@@ -105,7 +105,8 @@ p {
   width: 28rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  justify-items: center;
+  gap: 1rem;
+  justify-items: inherit;
 }
 
 .pass-container input{

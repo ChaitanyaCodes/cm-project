@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext , useState } from "react";
+import React, { useContext , useState , useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import '../../css/login.css';
@@ -13,9 +13,12 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [key, setKey] = useState("");
+  const [KeyField, setKeyField] = useState(1);
 
   const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
+
+  const keyFn = (e) => setKey(e.target.value);
 
   async function register(e) {
     e.preventDefault();
@@ -41,12 +44,16 @@ export default function SignUp() {
     }
   }
 
+  const selectHandler = (e) => {
+    setRole(e.target.options[e.target.selectedIndex].value)
+  }
+
   return (
     <div className="bg-img">
       <form onSubmit={register}>
       <div className="container">
         <h2 >Sign Up</h2>
-        <select  className="s-my" name="cars" id="cars" onChange={(e) => setRole(e.target.options[e.target.selectedIndex].value)}
+        <select  className="s-my" name="role" id="role" onChange={selectHandler}
             value={role}>
             <option value="none" defaultChecked hidden >Select your role</option>
             <option value="1">Student</option>
@@ -80,12 +87,16 @@ export default function SignUp() {
               value={confirmPwd} className="s-my "
             />
           </div>
-          <input
-            type="password"
-            placeholder="Confirm key"
-            onChange={(e) => setKey(e.target.value)}
-            value={key} className="s-my large"
-          />
+          {
+              role == 2 || role == 3 ? 
+              <input
+                type="password"
+                placeholder="Confirm key"
+                onChange={(e) => setPassword(e.target.value)}
+                value={key} className="s-my large"
+              /> : null
+          }
+          
           <button type="submit"  className="s-my-btn">Register</button>
           <Link to="/login"><button type="submit" className="s-my-btn">Login</button></Link>
         </div>
