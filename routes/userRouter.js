@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import express from 'express';
 import dotenv from 'dotenv';
-
 dotenv.config();
 const router = express.Router();
 const teacherKey = "welcometeacher";
@@ -121,5 +120,4 @@ router.get("/loggedIn", (req, res) => {
       res.json(false);
     }
   });
-
 export default router;
