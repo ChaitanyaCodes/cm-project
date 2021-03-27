@@ -13,7 +13,6 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [key, setKey] = useState("");
-  const [KeyField, setKeyField] = useState(1);
 
   const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
@@ -38,7 +37,7 @@ export default function SignUp() {
         signUpData
       );
       await getLoggedIn();
-      history.push("/");
+      history.push("/dashboard");
     } catch (err) {
       console.error(err);
     }
@@ -92,7 +91,7 @@ export default function SignUp() {
               <input
                 type="password"
                 placeholder="Confirm key"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setKey(e.target.value)}
                 value={key} className="s-my large"
               /> : null
           }

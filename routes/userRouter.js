@@ -12,7 +12,7 @@ router.post('/signup', async (req, res) => {
     try{
         const {email, password, confirmPwd, fullName, role, key} = req.body;
         // signup validation
-        if(!email || !password || !confirmPwd || !key)
+        if(!email || !password || !confirmPwd )
             return res
                 .status(400)
                 .json({errorMessage: "Please Enter All fields."});
@@ -20,11 +20,11 @@ router.post('/signup', async (req, res) => {
             return res
             .status(400)
             .json({errorMessage: "Please Enter Password of atleast 8 characters."});
-        if(role === 2 || key !== teacherKey)
+        if(role == 2 && key !== teacherKey)
             return res
             .status(400)
             .json({errorMessage: "Wrong Key."});
-        if(role === 3 || key !== adminKey)
+        if(role == 3 && key !== adminKey)
             return res
             .status(400)
             .json({errorMessage: "Wrong Key."});
