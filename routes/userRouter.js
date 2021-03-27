@@ -11,14 +11,26 @@ router.post('/signup', async (req, res) => {
     try{
         const {email, password, confirmPwd, fullName, role, key} = req.body;
         // signup validation
-        if(!email || !password || !confirmPwd )
+        if(!email)
             return res
                 .status(400)
-                .json({errorMessage: "Please Enter All fields."});
+                .json({errorMessage: "Please Enter your Email."});
+        if(!role)
+            return res
+            .status(400)
+            .json({errorMessage: "Please select a role."});
+        if(!fullName)
+            return res
+            .status(400)
+            .json({errorMessage: "Please enter your name."});
         if(password.length < 8 )
             return res
             .status(400)
             .json({errorMessage: "Please Enter Password of atleast 8 characters."});
+        if(role == 2 && role == 3 || !key)
+            return res
+            .status(400)
+            .json({errorMessage: "Enter the Key."});
         if(role == 2 && key !== teacherKey)
             return res
             .status(400)
