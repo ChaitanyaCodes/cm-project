@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { useContext , useState , useEffect} from "react";
+import React, { useContext , useState} from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import '../../css/login.css';
 import AuthContext from '../../context/AuthContext.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function SignUp() {
@@ -16,8 +18,6 @@ export default function SignUp() {
 
   const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
-
-  const keyFn = (e) => setKey(e.target.value);
 
   async function register(e) {
     e.preventDefault();
@@ -39,7 +39,8 @@ export default function SignUp() {
       await getLoggedIn();
       history.push("/dashboard");
     } catch (err) {
-      console.error(err);
+      toast.error(err.response.data.errorMessage)
+      console.log(err.response.data.errorMessage);
     }
   }
 
@@ -100,6 +101,7 @@ export default function SignUp() {
           <Link to="/login"><button type="submit" className="s-my-btn">Login</button></Link>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }

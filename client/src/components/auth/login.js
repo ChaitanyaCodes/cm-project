@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import '../../css/login.css';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login(){
@@ -21,15 +23,16 @@ export default function Login(){
             email,
             password
           };
-    
+
           await axios.post(
             "http://localhost:5000/auth/login",
             loginData
-          );
+          );            // .catch(console.log("access denied to wrong"))
           await getLoggedIn();
           history.push("/dashboard");
         } catch (err) {
-          console.error(err);
+          toast.error(err.response.data.errorMessage);
+          console.error(err.response.data.errorMessage);
         }
       }
 
@@ -65,6 +68,7 @@ export default function Login(){
                 <p>Copyright <span>&copy;</span> 2021</p>
             </div>
         </form>
+        <ToastContainer />
     </div>  
     );
 }

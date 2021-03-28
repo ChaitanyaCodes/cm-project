@@ -59,10 +59,10 @@ router.post('/signup', async (req, res) => {
         // Send the token in a HTTP-only cookie
         res.cookie('token', token,{
             httpOnly: true,
-        }).send();
+        }).send("userCreated");
     }catch(err){
         console.error(err);
-        res.status(500).send();
+        res.status(500).send("erroroccured");
     }
 } );
 
@@ -94,9 +94,9 @@ router.post('/login', async (req,res)=>{
             httpOnly: true,
         }).send('logged');
         } catch(err){
-        console.error(err);
-        res.status(500).send();
-    }
+            console.log("catch scope");
+            res.status(500).send();
+        }
 });
 // logout
 router.use('/logout',(req, res)=>{
@@ -118,7 +118,8 @@ router.get("/loggedIn", (req, res) => {
   
       res.send(true);
     } catch (err) {
-      res.json(false);
+        console.log("not logged")
+        res.json(false);
     }
   });
 
