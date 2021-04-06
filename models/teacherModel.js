@@ -21,37 +21,29 @@ const teacherSchema = new mongoose.Schema(
         teaching: {
             years: {
                 year: {type: Date},
-                semesterOne: {
+                oddSem: {
                     teachnigSubjects: {
                         subject: {
                             subjectName: {type: String},
+                            subjectCode: {type: String},
                             totalStudents: {type: Number},
-                            AICTE_SCORE: {
-                                effectiveness: {type: [[Number]]},
-                                support: {type: [[Number]]},
-                                extra: {type: [[Number]]},
-                                effectivenessAvg: {type: [[mongoose.Schema.Types.Decimal128]]},
-                                supportAvg: {type: [[mongoose.Schema.Types.Decimal128]]},
-                                totalOf45: {type: [mongoose.Schema.Types.Decimal128]},
-                                totalOf25: {type: [mongoose.Schema.Types.Decimal128]},
-                                finalAICTE_SCORE: {type : [mongoose.Schema.Types.Decimal128]}
-                            }
+                            AICTEScore: {type: mongoose.Schema.Types.Decimal128}
                         },
-                        ComputerGraphics: {
-                            totalStudents: {type: Number},
-                            AICTE_SCORE: {
-                                effectiveness: {type: [[Number]]},
-                                support: {type: [[Number]]},
-                                extra: {type: [[Number]]},
-                                effectivenessAvg: {type: [[mongoose.Schema.Types.Decimal128]]},
-                                supportAvg: {type: [[mongoose.Schema.Types.Decimal128]]},
-                                totalOf45: {type: [mongoose.Schema.Types.Decimal128]},
-                                totalOf25: {type: [mongoose.Schema.Types.Decimal128]},
-                                finalAICTE_SCORE: {type : [mongoose.Schema.Types.Decimal128]}
-                            }
-                        }
+                        finalAICTEScoreOddSem: {type : mongoose.Schema.Types.Decimal128}
                     }
-                }
+                },
+                evenSem: {
+                    teachnigSubjects: {
+                        subject: {
+                            subjectName: {type: String},
+                            subjectCode: {type: String},
+                            totalStudents: {type: Number},
+                            AICTEScore: {type: mongoose.Schema.Types.Decimal128}
+                        }
+                    },
+                    finalAICTEScoreEvenSem: {type : mongoose.Schema.Types.Decimal128}
+                },
+                finalAICTEScore: {type : mongoose.Schema.Types.Decimal128}
             }
         }
     }
