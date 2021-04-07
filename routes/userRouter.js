@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+import csvtojson from 'csvtojson';
+
 const router = express.Router();
 const teacherKey = "welcometeacher";
 const adminKey = "manager";
@@ -133,4 +135,24 @@ router.get("/loggedIn", (req, res) => {
         res.json(false);
     }
   });
+
+router.post("/uploadcsv", (req,res) =>{
+    try{
+            const {email} = req.body;
+                const newStudent = new Student({
+                    email
+                });
+
+            await newStudent.save()
+            .then(function(result){
+                console.log("Data inserted",result) // Success
+            }).catch(function(error){
+                console.log(error);      // Failure
+            });
+            return res.json({errorMessage: error});
+    } catch(err){
+        console.log("not logged")
+        res.json(false);
+    }
+});
 export default router;
