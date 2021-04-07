@@ -1,11 +1,10 @@
 import User from '../models/usersModel.js';
+import Student from '../models/studentModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
-import csvtojson from 'csvtojson';
-
 const router = express.Router();
 const teacherKey = "welcometeacher";
 const adminKey = "manager";
@@ -136,9 +135,9 @@ router.get("/loggedIn", (req, res) => {
     }
   });
 
-router.post("/uploadcsv", (req,res) =>{
+router.post("/uploadcsv", async (req,res) =>{
     try{
-            const {email} = req.body;
+            const email = "testingfromcode@gmail.com"
                 const newStudent = new Student({
                     email
                 });
@@ -147,12 +146,14 @@ router.post("/uploadcsv", (req,res) =>{
             .then(function(result){
                 console.log("Data inserted",result) // Success
             }).catch(function(error){
-                console.log(error);      // Failure
+                console.log("Error");      // Failure
             });
-            return res.json({errorMessage: error});
+            return res.json({errorMessage: "Data Inserted"});
     } catch(err){
-        console.log("not logged")
-        res.json(false);
+        console.error(err);
+        console.log("Not Saving");
+        res.json(err)
+        .send("Not Saving");
     }
 });
 export default router;

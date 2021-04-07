@@ -1,92 +1,93 @@
 import Student from '../models/studentModel.js'
 import csvtojson from 'csvtojson';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import express, { Router } from 'express';
+import express from 'express';
 
-dotenv.config();
-const app = express();
-app.use(express.json());
-// const paths = ['../assets/csvFiles/aca.csv','../assets/csvFiles/cl.csv', '../assets/csvFiles/sw.csv','../assets/csvFiles/nw.csv','../assets/csvFiles/cg.csv']//Uncomment For Multiple CSV
-const path = '../client/src/assets/csvFiles/aca.csv';//Toggle comment this for Single input
-// paths.forEach(path => {//Uncomment For Multiple CSV
-const CONNECTION_URI = process.env.DB;
-mongoose.connect(CONNECTION_URI, 
-  { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-    .catch((error) => console.log(error.message));
+const router = express.Router();
 
-    mongoose.set('useFindAndModify',false);
+// const path = '../client/src/assets/csvFiles/aca.csv';
+const path = './client/src/assets/csvFiles/aca.csv';
 
-    csvtojson()
-    .fromFile(path)
-    .then(async (json)=>{
-        const teacherName = json.teacherName;
-        //Common Array
-            var effectivenessArray = [];
-            var supportArray = [];
-            var extraArray = [];
-            var effectivenessCount = 0 ;
-            var supportCount = 0 ;
-            var extraCount = 0 ;
-            var size = json.length;
-            // console.log(json[0]);
-            var students = 
-                {
-                    email : "livio@gmail.com"
-                };
-                // {
-                //     fullName : "Vineet",
-                //     email : "vineet@gmail.com"
-                // },
-                // {
-                //     fullName : "Chaitanya",
-                //     email : "codes@gmail.com"
-                // };
-            const {email} = {
-                email : "livio@gmail.com"
-            };
-                const newStudent = new Student({
-                    email
-                });
+router.post("/csv", async (req, res) =>{
+	try{
+		csvtojson()
+		.fromFile(path)
+		.then(async (json)=>{
+			var effectiveness = [];
+			var support = [];
+			var extra = [];
+			var effectivenessCount = 0 ;
+			var supportCount = 0 ;
+			var extraCount = 0 ;
+			var size = json.length;
+			var studentsArray = [];
+			var studentCount = 0;
+			for(var count = 0; count < size; count++){
+				const fullName = json[count].Name;
+				const email = json[count].Username;
+				const enrollmentNo = json[count].EnrollmentNumber;
+				extra[extraCount++] = json[count].Q1;
+				extra[extraCount++] = json[count].Q2;
+				effectiveness[effectivenessCount++] =json[count].Q3;
+				effectiveness[effectivenessCount++] =json[count].Q4;
+				effectiveness[effectivenessCount] =json[count].Q5;
+				extra[extraCount++] = json[count].Q6;
+				extra[extraCount++] = json[count].Q7;
+				support[supportCount++] = json[count].Q8;
+				support[supportCount] = json[count].Q9;
+				extra[extraCount++] = json[count].Q10;
+				extra[extraCount++] = json[count].Q11;
+				extra[extraCount] = json[count].Q12;
+				effectivenessCount = 0 ;
+				supportCount = 0 ;
+				extraCount = 0 ;
+				var formInput = {
+					effectiveness,
+					support,
+					extra
+				};
+				studentsArray[studentCount++]= {
+					fullName,
+                    email,
+					enrollmentNo,
+					formInput
+				};
+				console.log(formInput);
+				// const newStudent = new Student({
+				// 	fullName,
+				// 	email,
+				// 	enrollmentNo,
+				// 	formInput
+				// });
+				// await newStudent.save()
+				// .then(() => {
+				// 	res
+				// 	.status(200)
+				// 	.json({errorMessage: "Data Stored"});
+				// }).catch(() => {
+				// 	res
+				// 	.status(500)
+				// 	.json({errorMessage: "Data could not be uploaded"});
+				// });
+        }
+		console.log("All",studentsArray);
+		await Student.insertMany(studentsArray)
+		.then(() => {
+			res
+			.status(200)
+			.json({errorMessage: "All Data Stored"});
+		}).catch(() => {
+			res
+			.status(500)
+			.json({errorMessage: "Data could not be uploaded"});
+		});
+		
+    }); 
+	}catch(error){
+		console.error(error);
+		return res
+		.status(500)
+		.json({errorMessage: "File could not upload"});
+	}
+});
 
-            await newStudent.save()
-            .then(function(result){
-                console.log("Data inserted",result) // Success
-            }).catch(function(error){
-                console.log(error);      // Failure
-            });
-
-            // function(err, result) {
-            //     if (err) {
-            //         console.log("Error", err);
-            //     } else {
-            //         console.log("Result",result);
-            //     }
-            //   }
-
-
-            // for(var count = 0; count < size; count++){
-            //     extraArray[extraCount++] = json[count].Q1;
-            //     extraArray[extraCount++] = json[count].Q2;
-            //     effectivenessArray[effectivenessCount++] = json[count].Q3;
-            //     effectivenessArray[effectivenessCount++] = json[count].Q4;
-            //     effectivenessArray[effectivenessCount] = json[count].Q5;
-            //     extraArray[extraCount++] = json[count].Q6;
-            //     extraArray[extraCount++] = json[count].Q7;
-            //     supportArray[supportCount++] = json[count].Q8;
-            //     supportArray[supportCount] = json[count].Q9;
-            //     extraArray[extraCount++] = json[count].Q10;
-            //     extraArray[extraCount++] = json[count].Q11;
-            //     extraArray[extraCount] = json[count].Q12;
-            //     effectivenessCount = 0 ;
-            //     supportCount = 0 ;
-            //     extraCount = 0 ;
-
-                // console.log("Student ", count);
-                // console.log("effectiveness",effectivenessArray);
-                // console.log("Support",supportArray);
-                // console.log("Extra",extraArray);
-            //}
-        }); 
-// });//Uncomment For Multiple CSV
+export default router;
