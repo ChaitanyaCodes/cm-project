@@ -6,6 +6,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import userRoutes from './routes/userRouter.js';
 import dotenv from 'dotenv';
+import upCsv from './routes/uploadCSV.js';
 
 const __dirname = path.resolve();
 dotenv.config();
@@ -49,3 +50,4 @@ mongoose.connect(CONNECTION_URI,
       });
 
 app.use('/auth', userRoutes);
+app.use('/upload', upCsv);
