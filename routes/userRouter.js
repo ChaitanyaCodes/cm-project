@@ -1,5 +1,4 @@
 import User from '../models/usersModel.js';
-import Student from '../models/studentModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import express from 'express';
@@ -121,39 +120,15 @@ router.use('/logout',(req, res)=>{
 // checked if user is logged in //
 router.get("/loggedIn", (req, res) => {
     try {
-      const token = req.cookies.token;
-      if (!token) 
+        const token = req.cookies.token;
+        if (!token) 
         return res.json(false);
-  
-      jwt.verify(token, process.env.JWT_SECRET);
+        jwt.verify(token, process.env.JWT_SECRET);
     //   req.user = verified.user;
-  
-      res.send(true);
+    res.send(true);
     } catch (err) {
         console.log("not logged")
         res.json(false);
-    }
-  });
-
-router.post("/uploadcsv", async (req,res) =>{
-    try{
-            const email = "testingfromcode@gmail.com"
-                const newStudent = new Student({
-                    email
-                });
-
-            await newStudent.save()
-            .then(function(result){
-                console.log("Data inserted",result) // Success
-            }).catch(function(error){
-                console.log("Error");      // Failure
-            });
-            return res.json({errorMessage: "Data Inserted"});
-    } catch(err){
-        console.error(err);
-        console.log("Not Saving");
-        res.json(err)
-        .send("Not Saving");
     }
 });
 export default router;
