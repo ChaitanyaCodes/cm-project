@@ -10,6 +10,7 @@ const teacherKey = "welcometeacher";
 const adminKey = "manager";
 router.post('/signup', async (req, res) => {
     try{
+
         const {email, password, confirmPwd, fullName, role, key} = req.body;
         // signup validation
         if(!email)
@@ -56,8 +57,6 @@ router.post('/signup', async (req, res) => {
 
         //save new user 
         const newUser = new User({
-            fullName,
-            role,
             email, 
             passwordHash,
         });
