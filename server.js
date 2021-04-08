@@ -3,15 +3,17 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 import userRoutes from './routes/userRouter.js';
-
 import dotenv from 'dotenv';
+import upCsv from './routes/uploadCSV.js';
 
 const __dirname = path.resolve();
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname,"client","build")));
 app.use(express.static("public"));
@@ -32,7 +34,8 @@ process.on('uncaughtException', err => {
 
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URI = process.env.DB;
-mongoose.connect(CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(CONNECTION_URI, 
+  { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
     .catch((error) => console.log(error.message));
 
@@ -47,3 +50,4 @@ mongoose.connect(CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: tr
       });
 
 app.use('/auth', userRoutes);
+app.use('/upload', upCsv);

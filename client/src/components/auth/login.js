@@ -1,12 +1,19 @@
 import axios from "axios";
-import React, { Fragment, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import '../../css/login.css';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const { getLoggedIn } = useContext(AuthContext);
+    const history = useHistory();
 
     async function login(e) {
         e.preventDefault();
@@ -16,15 +23,16 @@ export default function Login(){
             email,
             password
           };
-    
+
           await axios.post(
             "http://localhost:5000/auth/login",
             loginData
-          );
-        //   await getLoggedIn();
-        //   history.push("/");
+          );            // .catch(console.log("access denied to wrong"))
+          await getLoggedIn();
+          history.push("/dashboard");
         } catch (err) {
-          console.error(err);
+          toast.error(err.response.data.errorMessage);
+          console.error(err.response.data.errorMessage);
         }
       }
 
@@ -32,7 +40,7 @@ export default function Login(){
     <div className="bg-img">
         <form className="form" onSubmit={login}> 
             <div className="container">
-                <h2>sign in</h2>
+                <h2 className="s-my">Sign In</h2>
                 <input
                     type="email"
                     name="email"
@@ -42,6 +50,7 @@ export default function Login(){
                     autoFocus
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
+                    className="s-my large"
                 />
                 <input
                     type="password"
@@ -51,13 +60,15 @@ export default function Login(){
                     required
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
+                    className="s-my large"
                 />
-                <button type="submit">Sign in</button>
-                <Link to="/signup"><button type="submit">Sign Up</button></Link>
+                <button type="submit" className="s-my-btn">Sign in</button>
+                <Link to="/signup"><button type="submit" className="s-my-btn">Sign Up</button></Link>
                 
                 <p>Copyright <span>&copy;</span> 2021</p>
             </div>
         </form>
+        <ToastContainer />
     </div>  
     );
 }

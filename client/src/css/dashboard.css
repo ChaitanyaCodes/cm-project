@@ -1,0 +1,30 @@
+.menu {
+  width: 25%;
+  height: 100vh;
+  background-color: #2a2138;
+  color: #fff;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.5rem;
+}
+.item:hover {
+  background-color: #221a2e;
+  color: magenta;
+}
+span {
+  padding: 1rem;
+}
+
+@media screen and (min-width: 1028px) {
+  .menu {
+    width: 15%;
+    height: 100vh;
+    background-color: #2a2138;
+    color: #fff;
+  }
+}

@@ -1,24 +1,48 @@
 import User from '../models/usersModel.js';
+import Student from '../models/studentModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import express from 'express';
 import dotenv from 'dotenv';
-
 dotenv.config();
 const router = express.Router();
+const teacherKey = "welcometeacher";
+const adminKey = "manager";
 router.post('/signup', async (req, res) => {
     try{
-        const {email, password, confirmPwd} = req.body;
+
+        const {email, password, confirmPwd, fullName, role, key} = req.body;
         // signup validation
-        if(!email || !password || !confirmPwd)
+        if(!email)
             return res
                 .status(400)
-                .json({errorMessage: "Please Enter All fields."});
+                .json({errorMessage: "Please Enter your Email."});
+        if(!role)
+            return res
+            .status(400)
+            .json({errorMessage: "Please select a role."});
+        if(!fullName)
+            return res
+            .status(400)
+            .json({errorMessage: "Please enter your name."});
         if(password.length < 8 )
             return res
             .status(400)
             .json({errorMessage: "Please Enter Password of atleast 8 characters."});
-            const existingUser = await User.findOne({email});
+        if(role == 2 && role == 3 || !key)
+            return res
+            .status(400)
+            .json({errorMessage: "Enter the Key."});
+        if(role == 2 && key !== teacherKey)
+            return res
+            .status(400)
+            .json({errorMessage: "Wrong Key."});
+        if(role == 3 && key !== adminKey)
+            return res
+            .status(400)
+            .json({errorMessage: "Wrong Key."});
+
+        const existingUser = await User.findOne({email});
         if(password !== confirmPwd)
             return res
                 .status(400)
@@ -27,7 +51,7 @@ router.post('/signup', async (req, res) => {
             return res
                 .status(400)
                 .json({errorMessage: "User already exists."});
-        // Hash Password
+                        // Hash Password
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt);
 
@@ -38,7 +62,7 @@ router.post('/signup', async (req, res) => {
         });
         const savedUser = await newUser.save();
 
-        // log user
+        // // log user
         const token = jwt.sign({
             user: savedUser._id
         },process.env.JWT_SECRET);
@@ -46,10 +70,10 @@ router.post('/signup', async (req, res) => {
         // Send the token in a HTTP-only cookie
         res.cookie('token', token,{
             httpOnly: true,
-        }).send();
+        }).send("userCreated");
     }catch(err){
         console.error(err);
-        res.status(500).send();
+        res.status(500).send("erroroccured");
     }
 } );
 
@@ -81,9 +105,9 @@ router.post('/login', async (req,res)=>{
             httpOnly: true,
         }).send('logged');
         } catch(err){
-        console.error(err);
-        res.status(500).send();
-    }
+            console.log("catch scope");
+            res.status(500).send();
+        }
 });
 // logout
 router.use('/logout',(req, res)=>{
@@ -93,4 +117,42 @@ router.use('/logout',(req, res)=>{
     }).send("Logged Out");
 });
 
+// checked if user is logged in //
+router.get("/loggedIn", (req, res) => {
+    try {
+      const token = req.cookies.token;
+      if (!token) 
+        return res.json(false);
+  
+      jwt.verify(token, process.env.JWT_SECRET);
+    //   req.user = verified.user;
+  
+      res.send(true);
+    } catch (err) {
+        console.log("not logged")
+        res.json(false);
+    }
+  });
+
+router.post("/uploadcsv", async (req,res) =>{
+    try{
+            const email = "testingfromcode@gmail.com"
+                const newStudent = new Student({
+                    email
+                });
+
+            await newStudent.save()
+            .then(function(result){
+                console.log("Data inserted",result) // Success
+            }).catch(function(error){
+                console.log("Error");      // Failure
+            });
+            return res.json({errorMessage: "Data Inserted"});
+    } catch(err){
+        console.error(err);
+        console.log("Not Saving");
+        res.json(err)
+        .send("Not Saving");
+    }
+});
 export default router;
