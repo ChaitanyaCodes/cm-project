@@ -37,7 +37,7 @@ const teacherSchema = new mongoose.Schema({
             subjectName: { type: String },
             subjectCode: { type: String },
             totalStudents: { type: Number },
-            AICTEScore: { type: mongoose.Schema.Types.Decimal128 },
+            subjectAicteScore: { type: mongoose.Schema.Types.Decimal128 },
           },
         },
         finalAICTEScoreEvenSem: { type: mongoose.Schema.Types.Decimal128 },
