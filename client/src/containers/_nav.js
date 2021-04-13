@@ -34,7 +34,7 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Logout',
     to: '/logout',
-    icon: 'cil-chart-pie'
+    icon: 'cil-chevron-left'
   },
   
 ]
