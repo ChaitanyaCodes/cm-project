@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { useHistory} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import {
+  CButton
+} from '@coreui/react'
 
 export default function LogOutBtn() {
   const { getLoggedIn } = useContext(AuthContext);
@@ -22,5 +25,5 @@ export default function LogOutBtn() {
     history.push("/");
   }
 
-  return <button onClick={logOut} style={styles} >LOG OUT</button>;
+  return <button onClick={logOut} style={styles} ><CButton block color="danger">Logout</CButton></button>;
 }
