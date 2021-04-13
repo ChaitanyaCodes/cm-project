@@ -106,6 +106,7 @@ router.post('/login', async (req,res)=>{
         }).send('logged');
         } catch(err){
             console.log("catch scope");
+            console.log(err);
             res.status(500).send();
         }
 });
