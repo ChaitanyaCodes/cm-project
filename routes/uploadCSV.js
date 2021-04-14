@@ -1,4 +1,5 @@
 import Student from "../models/studentModel.js";
+import Teacher from "../models/teacherModel.js";
 import csvtojson from "csvtojson";
 import express from "express";
 import lodash from "lodash";
@@ -31,10 +32,12 @@ router.post("/csv", async (req, res) => {
         	var size = json.length;
         	var studentsArray = [];
         	var studentCount = 0;
+			var arrOf25 = [];
         	for (var count = 0; count < size; count++) {
 				var effectivenessCount = 0;
 				var supportCount = 0;
 				var extraCount = 0;
+				var teacherName = json[count].TeacherName;
 				const fullName = json[count].Name;
 				const email = json[count].Username;
 				const enrollmentNo = json[count].EnrollmentNumber;
@@ -55,6 +58,7 @@ router.post("/csv", async (req, res) => {
 				var totalOf45 =  calcOf45(supportAvg, effectivenessAvg, extra);
 				var totalOf25 = calcOf25(totalOf45);
 				console.log(totalOf25);
+				arrOf25.push(parseFloat(totalOf25));
 				var formInput = {
 					effectiveness,
 					support,
@@ -68,6 +72,7 @@ router.post("/csv", async (req, res) => {
 					fullName,
 					email,
 					enrollmentNo,
+					teacherName,
 					formInput,
 				};
 				const newStudent = new Student({
@@ -78,6 +83,48 @@ router.post("/csv", async (req, res) => {
 				});
 				await newStudent.save()
         	}
+			var subjectAicteScore = calcAvg(arrOf25);
+			var term = json[0].Term;
+			var oddTerm = "Odd";
+			if(term === oddTerm){
+				const newTeacher = new Teacher({
+					profile:{
+						name : teacherName,
+					},
+					teaching:{
+						years:{
+							oddSem:{
+								teachnigSubjects:{
+									subject:{
+										subjectAicteScore,
+									}
+								}
+							}
+						}
+					}
+				});
+				await newTeacher.save();
+			}else{
+				const newTeacher = new Teacher({
+					profile:{
+						name : teacherName,
+					},
+					teaching:{
+						years:{
+							evenSem:{
+								teachnigSubjects:{
+									subject:{
+										subjectAicteScore,
+									}
+								}
+							}
+						}
+					}
+				});
+				await newTeacher.save();
+			}
+			console.log(subjectAicteScore);
+			
 			res.status(200).json({ errorMessage: "Data Stored" });
         	// console.log("All", studentsArray);
 		});
