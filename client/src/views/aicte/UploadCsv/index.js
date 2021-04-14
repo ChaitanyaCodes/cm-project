@@ -1,6 +1,6 @@
 import React from 'react';
 import FileUpload from '../../../components/fileUpload/FileUpload';
-const UploadCsv = (props) => {
+const UploadCsv = () => {
     return(
         <div>
             <h4 className="display-6 text-center mt-1 mb-4" >
@@ -11,4 +11,4 @@ const UploadCsv = (props) => {
     )
 }
 
-export default UploadCsv
+export default UploadCsv;

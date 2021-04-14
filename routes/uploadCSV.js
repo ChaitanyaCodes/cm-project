@@ -3,11 +3,16 @@ import Teacher from "../models/teacherModel.js";
 import csvtojson from "csvtojson";
 import express from "express";
 import lodash from "lodash";
+import fileUpload from 'express-fileupload';
+import path from "path";
+
+const __dirname = path.resolve();
 
 const router = express.Router();
+router.use(fileUpload());
 
 // const path = '../client/src/assets/csvFiles/aca.csv';
-const path = "./client/src/assets/csvFiles/aca.csv";
+var csvFilePath = "";
 var calcAvg =  inArray =>{
 	var size = inArray.length;
 	var sum = lodash.sum(inArray);
@@ -23,8 +28,21 @@ var calcOf25 = total => {
 }
 router.post("/csv", async (req, res) => {
 	try {
+		if (req.files === null) {
+			return res.status(400).json({ msg: 'No file uploaded' });
+		}
+		const file = req.files.file;
+		console.log(`${__dirname}/client/public/uploads/${file.name}`);
+		await file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+			if (err) {
+			  console.error(err);
+			  return res.status(500).send(err);
+			}
+			// res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+		  });
+		csvFilePath = '${__dirname}/client/public/uploads/${file.name}';
 		csvtojson()
-		.fromFile(path)
+		.fromFile(csvFilePath)
 		.then(async (json) => {
         	var effectiveness = [];
         	var support = [];

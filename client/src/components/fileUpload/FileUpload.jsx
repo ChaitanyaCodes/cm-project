@@ -11,7 +11,7 @@ const FileUpload = () => {
     const onChange = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
-    }
+    };
 
     const onSubmit = async e => {
         e.preventDefault();
@@ -19,22 +19,22 @@ const FileUpload = () => {
         formData.append('file', file);
 
         try {
-            const res = await axios.post('http://localhost:5000/auth/login', formData, {
+            const res = await axios.post('http://localhost:5000/upload/csv', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
 
             toast.success("file uploaded to the database.");
-            
             const { fileName, filePath } = res.data;
             setUploadedFile({ fileName, filePath });
         } catch(err) {
-            if(err.response.status == 500) {
-                console.log("There was an error in connecting the server");
-            } else {
-                console.log(err.response.data.msg);
-            }
+            console.log(err);
+            // if(err.response.status == 500) {
+            //     console.log("There was an error in connecting the server");
+            // } else {
+            //     console.log(err.response.data.msg);
+            // }
         }
     }
 
