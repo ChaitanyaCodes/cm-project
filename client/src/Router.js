@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Login from "./components/auth/login";
 import SignUp from './components/auth/SignUp';
 import AuthContext from "./context/AuthContext";
@@ -30,11 +30,11 @@ function Router() {
               <Route exact path="/signup" component={SignUp} />
             </>
           )}
-          {loggedIn === true && (
+          {loggedIn? (
             <>
               <Route path="/" name="Home" render={props => <TheLayout {...props}/>} />
             </>
-          )}
+          ): <Redirect to="/login" />}
         </Switch>
       </React.Suspense>
     </BrowserRouter>
