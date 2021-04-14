@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(fileUpload());
 
 // const path = '../client/src/assets/csvFiles/aca.csv';
-var csvFilePath = "";
+var  csvFilePath = "";  
 var calcAvg =  inArray =>{
 	var size = inArray.length;
 	var sum = lodash.sum(inArray);
@@ -32,15 +32,15 @@ router.post("/csv", async (req, res) => {
 			return res.status(400).json({ msg: 'No file uploaded' });
 		}
 		const file = req.files.file;
-		console.log(`${__dirname}/client/public/uploads/${file.name}`);
-		await file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+		var fileName = file.name;
+		csvFilePath = path.join(__dirname, "client", "public", "uploads", fileName);
+		console.log(csvFilePath);
+		await file.mv(csvFilePath, err => {
 			if (err) {
-			  console.error(err);
-			  return res.status(500).send(err);
+				console.error(err);
+				return res.status(500).send(err);
 			}
-			// res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-		  });
-		csvFilePath = '${__dirname}/client/public/uploads/${file.name}';
+		});
 		csvtojson()
 		.fromFile(csvFilePath)
 		.then(async (json) => {
