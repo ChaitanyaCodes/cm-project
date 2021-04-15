@@ -120,21 +120,66 @@ router.post("/csv", async (req, res) => {
 				totalStudents: size,
 				subjectAicteScore,
 			};
-			const newTeacher =  new Teacher({
-				fullName : teacherName,
-			});
-			await newTeacher.save();
-			const oldTeacher = await Teacher.findOne({fullName : teacherName});
-			oldTeacher.teaching.subjects.push(subject);
-			await oldTeacher.save();
-			const scoreTeacher = await Teacher.findOne({fullName : teacherName}, {teaching:{aicteScores:{year}}});
+			// const newTeacher =  new Teacher({
+			// 	fullName : teacherName,
+			// });
+			// await newTeacher.save();
+			// const oldTeacher = await Teacher.updateOne(
+			// 	{fullName : teacherName},
+			// 	{$push:
+			// 		{
+			// 			'teaching.subjects': subject
+			// 		}
+			// 	}
+			// )
+			// oldTeacher.teaching.subjects.push(subject);
+			// await oldTeacher.save();
+			// console.log("Subject Saved", oldTeacher);
+			// const oldTeacher = await Teacher.updateOne(
+			// 	{fullName : teacherName},
+			// 	{$push:
+			// 		{
+			// 			'teaching.subjects': subject
+			// 		}
+			// 	}
+			// )
+			// const scoreTeacher = await Teacher.findOne({fullName : teacherName}, {teaching:{aicteScore:{year}}});
+			// Checking The term
 			if(term === oddTerm){
-				scoreTeacher.aicteScores.oddSemAicteScore.push(subjectAicteScore);
+				const oldTeacher = await Teacher.updateOne(
+					{fullName : teacherName, teaching:{aicteScores:{year}}},
+					{$push:
+						{
+							'teaching.aicteScores.oddSemAicteScore':subjectAicteScore
+						}
+					},function (err) {
+						if (err){
+							console.log(err)
+						}else{
+							console.log("Saved Odd");
+						}
+					}
+				)
 			}
 			else{
-				scoreTeacher.aicteScores.evenSemAicteScore.push(subjectAicteScore);
+				// Adding the Avg to evenSemAicteScore
+				const oldTeacher = await Teacher.updateOne(
+					{fullName : teacherName, teaching:{aicteScores:{year}}},
+					{$push:
+						{
+							'teaching.aicteScores.evenSemAicteScore':subjectAicteScore,
+						}
+					},function (err) {
+						if (err){
+							console.log(err)
+						}else{
+							console.log("Saved Even");
+						}
+					},
+				)
 			}
-			// console.log(oldTeacher);
+			// await oldTeacher.save();
+			// console.log(upTr);
 			res.status(200).json({ errorMessage: "Data Stored" });
 		});
 	}
