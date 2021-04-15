@@ -11,8 +11,8 @@ const __dirname = path.resolve();
 const router = express.Router();
 router.use(fileUpload());
 
-// const path = '../client/src/assets/csvFiles/aca.csv';
 var  csvFilePath = "";  
+// const csvFilePath = "../client/public/uploads/cg.csv";
 var calcAvg =  inArray =>{
 	var size = inArray.length;
 	var sum = lodash.sum(inArray);
@@ -44,18 +44,26 @@ router.post("/csv", async (req, res) => {
 		csvtojson()
 		.fromFile(csvFilePath)
 		.then(async (json) => {
+			// form Common Details
+			var term = json[0].Term;
+			var teacherName = json[0].TeacherName;
+			var subjectName = json[0].Subject;
+			var year = json[0].Year;
+        	var size = json.length;
+
+
         	var effectiveness = [];
         	var support = [];
         	var extra = [];
-        	var size = json.length;
         	var studentsArray = [];
         	var studentCount = 0;
 			var arrOf25 = [];
+			var oddTerm = "Odd";
+			var evenTerm = "Even";
         	for (var count = 0; count < size; count++) {
 				var effectivenessCount = 0;
 				var supportCount = 0;
 				var extraCount = 0;
-				var teacherName = json[count].TeacherName;
 				const fullName = json[count].Name;
 				const email = json[count].Username;
 				const enrollmentNo = json[count].EnrollmentNumber;
@@ -71,11 +79,12 @@ router.post("/csv", async (req, res) => {
 				extra[extraCount++] = parseInt(json[count].Q10);
 				extra[extraCount++] = parseInt(json[count].Q11);
 				extra[extraCount] = parseInt(json[count].Q12);
+				// Calculating Averages
 				var effectivenessAvg = calcAvg(effectiveness);
 				var supportAvg = calcAvg(support);
 				var totalOf45 =  calcOf45(supportAvg, effectivenessAvg, extra);
 				var totalOf25 = calcOf25(totalOf45);
-				console.log(totalOf25);
+				// console.log(totalOf25);
 				arrOf25.push(parseFloat(totalOf25));
 				var formInput = {
 					effectiveness,
@@ -102,49 +111,31 @@ router.post("/csv", async (req, res) => {
 				await newStudent.save()
         	}
 			var subjectAicteScore = calcAvg(arrOf25);
-			var term = json[0].Term;
-			var oddTerm = "Odd";
+			// console.log(subjectAicteScore);
+
+			var subject = {
+				year,
+				term,
+				subjectName,
+				totalStudents: size,
+				subjectAicteScore,
+			};
+			const newTeacher =  new Teacher({
+				fullName : teacherName,
+			});
+			await newTeacher.save();
+			const oldTeacher = await Teacher.findOne({fullName : teacherName});
+			oldTeacher.teaching.subjects.push(subject);
+			await oldTeacher.save();
+			const scoreTeacher = await Teacher.findOne({fullName : teacherName}, {teaching:{aicteScores:{year}}});
 			if(term === oddTerm){
-				const newTeacher = new Teacher({
-					profile:{
-						name : teacherName,
-					},
-					teaching:{
-						years:{
-							oddSem:{
-								teachnigSubjects:{
-									subject:{
-										subjectAicteScore,
-									}
-								}
-							}
-						}
-					}
-				});
-				await newTeacher.save();
-			}else{
-				const newTeacher = new Teacher({
-					profile:{
-						name : teacherName,
-					},
-					teaching:{
-						years:{
-							evenSem:{
-								teachnigSubjects:{
-									subject:{
-										subjectAicteScore,
-									}
-								}
-							}
-						}
-					}
-				});
-				await newTeacher.save();
+				scoreTeacher.aicteScores.oddSemAicteScore.push(subjectAicteScore);
 			}
-			console.log(subjectAicteScore);
-			
+			else{
+				scoreTeacher.aicteScores.evenSemAicteScore.push(subjectAicteScore);
+			}
+			// console.log(oldTeacher);
 			res.status(200).json({ errorMessage: "Data Stored" });
-        	// console.log("All", studentsArray);
 		});
 	}
 	catch (error) {
