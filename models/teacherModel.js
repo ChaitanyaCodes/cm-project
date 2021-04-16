@@ -17,30 +17,28 @@ const teacherSchema = new mongoose.Schema({
       industryExperience: { type: Number },
     },
   },
-  teaching: {
-    subjects: {
-      type: [
-        {
-          year: { type: Number },
-          term: { type: String },
-          subjectName: { type: String },
-          totalStudents: { type: Number },
-          subjectAicteScore: { type: mongoose.Schema.Types.Decimal128 },
-        },
-      ],
-    },
-    aicteScores: {
-      type: [
-        {
-          year: { type: Number },
-          oddSemAicteScore: { type: [mongoose.Schema.Types.Decimal128] },
-          evenSemAicteScore: { type: [mongoose.Schema.Types.Decimal128] },
-          oddSemAvg: { type: mongoose.Schema.Types.Decimal128 },
-          evenSemAvg: { type: mongoose.Schema.Types.Decimal128 },
-          AICTE_SCORE: { type: mongoose.Schema.Types.Decimal128 },
-        },
-      ],
-    },
+  subjects: {
+    type: [
+      {
+        year: { type: Number },
+        term: { type: String },
+        subjectName: { type: String },
+        totalStudents: { type: Number },
+        subjectAicteScore: { type: mongoose.Schema.Types.Decimal128 },
+      },
+    ],
+  },
+  aicteScores: {
+    type: [
+      {
+        year: { type: Number },
+        oddSemAicteScore: { type: [mongoose.Schema.Types.Decimal128] },
+        evenSemAicteScore: { type: [mongoose.Schema.Types.Decimal128] },
+        oddSemAvg: { type: mongoose.Schema.Types.Decimal128 },
+        evenSemAvg: { type: mongoose.Schema.Types.Decimal128 },
+        AICTE_SCORE: { type: mongoose.Schema.Types.Decimal128 },
+      },
+    ],
   },
 });
 
