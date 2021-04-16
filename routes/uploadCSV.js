@@ -149,17 +149,13 @@ router.post("/csv", async (req, res) => {
         // }else{
         // }
         // Checking The term
-        if (term === oddTerm) {
+        if (term == oddTerm) {
           const oldTeacher = await Teacher.updateOne(
-            { aicteScores: { $elemMatch:{year: 2021}  },fullName: teacherName},
+            { aicteScores: { $elemMatch:{year: year}  },fullName: teacherName},
             {
               $push: {
                 "aicteScores.$.oddSemAicteScore": subjectAicteScore,
               },
-            },
-            {
-              new: true,
-			  upsert: true,
             },
             function (err) {
               if (err) {
@@ -170,18 +166,15 @@ router.post("/csv", async (req, res) => {
             }
           );
           console.log(oldTeacher);
-        } else {
+        } 
+		else {
           // Adding the Avg to evenSemAicteScore
           const oldTeacher = await Teacher.updateOne(
-            { aicteScores: { $elemMatch:{year: 2021}  },fullName: teacherName},
+            { aicteScores: { $elemMatch:{year: year}  },fullName: teacherName},
             {
               $push: {
                 "aicteScores.$.evenSemAicteScore": subjectAicteScore,
               },
-            },
-            {
-              new: true,
-			  upsert: true,
             },
             function (err) {
               if (err) {
