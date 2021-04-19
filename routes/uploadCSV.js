@@ -130,7 +130,10 @@ router.post("/csv", async (req, res) => {
           await newTeacher.save();
         }
         // End Create New Teacher
-
+		
+		var aicteScore = {
+			year,
+		}
         // Start Push Teacher Subject Details
         const oldTeacher = await Teacher.updateOne(
           { fullName: teacherName },
@@ -138,6 +141,9 @@ router.post("/csv", async (req, res) => {
             $push: {
               subjects: subject,
             },
+			$push:{
+				aicteScores : aicteScore,
+			}
           }
         );
         // End Push Teacher Subject Details
@@ -270,7 +276,6 @@ router.post("/csv", async (req, res) => {
               }
             }
           );
-
           //getting AICET_SCORE
           const yearAicteScore = [oddSemAvg, evenSemAvg];
           const AICTESCORE = calcAvg(yearAicteScore);
