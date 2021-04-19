@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRouter.js";
 import dotenv from "dotenv";
 import upCsv from "./routes/uploadCSV.js";
-import fetchStudentData from "./routes/aicetToTeacher.js";
+import fetchData from "./routes/fetchData.js";
 
 const __dirname = path.resolve();
 dotenv.config();
@@ -55,4 +55,4 @@ process.on("unhandledRejection", (err) => {
 
 app.use("/auth", userRoutes);
 app.use("/upload", upCsv);
-app.use("/fetch", fetchStudentData);
+app.use("/fetch", fetchData);

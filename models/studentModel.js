@@ -7,6 +7,7 @@ const studentSchema = new mongoose.Schema({
   subjectNames: { type: [String] },
   subjectCodes: { type: [String] },
   formInput: {
+    year: {type: Number},
     effectiveness: { type: [Number] },
     support: { type: [Number] },
     extra: { type: [Number] },
