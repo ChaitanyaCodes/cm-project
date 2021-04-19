@@ -86,6 +86,7 @@ router.post("/csv", async (req, res) => {
           // console.log(totalOf25);
           arrOf25.push(parseFloat(totalOf25));
           var formInput = {
+			year,
             effectiveness,
             support,
             extra,
