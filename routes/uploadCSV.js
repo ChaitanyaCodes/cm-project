@@ -336,7 +336,7 @@ router.post("/csv", async (req, res) => {
 		  }
 		  else{
 			const yearAicteScore = [oddSemAvg, evenSemAvg];
-			const AICTESCORE = calc(yearAicteScore);
+			const AICTESCORE = calcAvg(yearAicteScore);
 			const settingAICTESCORE = await Teacher.updateOne(
 				{
 				  aicteScores: { $elemMatch: { year: year } },
