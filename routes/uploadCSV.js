@@ -144,14 +144,18 @@ router.post("/csv", async (req, res) => {
 		var aicteScore = {
 			year,
 		}
-		const yearTeacher = await Teacher.updateOne(
-          { fullName: teacherName },
-          {
-			$push:{
-				aicteScores : aicteScore,
-			}
-          }
-        );
+		const yearTeacher = await Teacher.findOne({aicteScores: { $elemMatch: { year: year } },
+			fullName: teacherName,})
+		if(!yearTeacher){
+			const yearTeacher = await Teacher.updateOne(
+			  { fullName: teacherName },
+			  {
+				$push:{
+					aicteScores : aicteScore,
+				}
+			  }
+			);
+		}
 
         // Start Checking and Storing AICTE score based on Term
         if (term == oddTerm) {
@@ -282,30 +286,80 @@ router.post("/csv", async (req, res) => {
             }
           );
           //getting AICET_SCORE
-          const yearAicteScore = [oddSemAvg, evenSemAvg];
-          const AICTESCORE = calcAvg(yearAicteScore);
-          const settingAICTESCORE = await Teacher.updateOne(
-            {
-              aicteScores: { $elemMatch: { year: year } },
-              fullName: teacherName,
-            },
-            {
-              $set: {
-                "aicteScores.$.AICTE_SCORE": AICTESCORE,
-              },
-            },
-            {
-              new: true,
-              upsert: true, //updated if found insert if not found
-            },
-            function (err) {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log("Aicte score successfully set.");
-              }
-            }
-          );
+		  if(!evenSemAvg){
+			    const settingAICTESCORE = await Teacher.updateOne(
+			      {
+			        aicteScores: { $elemMatch: { year: year } },
+			        fullName: teacherName,
+			      },
+			      {
+			        $set: {
+			          "aicteScores.$.AICTE_SCORE": oddSemAvg,
+			        },
+			      },
+			      {
+			        new: true,
+			        upsert: true, //updated if found insert if not found
+			      },
+			      function (err) {
+			        if (err) {
+			          console.log(err);
+			        } else {
+			          console.log("Aicte score successfully set.");
+			        }
+			      }
+			    );
+		  }
+		  else if(!oddSemAvg){
+			const settingAICTESCORE = await Teacher.updateOne(
+				{
+				  aicteScores: { $elemMatch: { year: year } },
+				  fullName: teacherName,
+				},
+				{
+				  $set: {
+					"aicteScores.$.AICTE_SCORE": evenSemAvg,
+				  },
+				},
+				{
+				  new: true,
+				  upsert: true, //updated if found insert if not found
+				},
+				function (err) {
+				  if (err) {
+					console.log(err);
+				  } else {
+					console.log("Aicte score successfully set.");
+				  }
+				}
+			  );
+		  }
+		  else{
+			const yearAicteScore = [oddSemAvg, evenSemAvg];
+			const AICTESCORE = calc(yearAicteScore);
+			const settingAICTESCORE = await Teacher.updateOne(
+				{
+				  aicteScores: { $elemMatch: { year: year } },
+				  fullName: teacherName,
+				},
+				{
+				  $set: {
+					"aicteScores.$.AICTE_SCORE": AICTESCORE,
+				  },
+				},
+				{
+				  new: true,
+				  upsert: true, //updated if found insert if not found
+				},
+				function (err) {
+				  if (err) {
+					console.log(err);
+				  } else {
+					console.log("Aicte score successfully set.");
+				  }
+				}
+			  );
+		  }
         });
         res.status(200).json({ errorMessage: "Data Stored" });
       });
