@@ -131,22 +131,27 @@ router.post("/csv", async (req, res) => {
         }
         // End Create New Teacher
 		
-		var aicteScore = {
-			year,
-		}
         // Start Push Teacher Subject Details
         const oldTeacher = await Teacher.updateOne(
           { fullName: teacherName },
           {
             $push: {
               subjects: subject,
-            },
+            }
+          }
+        );
+        // End Push Teacher Subject Details
+		var aicteScore = {
+			year,
+		}
+		const yearTeacher = await Teacher.updateOne(
+          { fullName: teacherName },
+          {
 			$push:{
 				aicteScores : aicteScore,
 			}
           }
         );
-        // End Push Teacher Subject Details
 
         // Start Checking and Storing AICTE score based on Term
         if (term == oddTerm) {
