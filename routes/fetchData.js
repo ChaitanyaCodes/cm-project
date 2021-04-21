@@ -5,11 +5,11 @@ import express from "express";
 const router = express.Router();
 
 // Retrieving Teacher Data
-router.post("/teacher", async (req, res) => {
+router.get("/teacher", async (req, res) => {
     try{
-        const teacherData = await Teacher.find();
-        console.log(teacherData);
-        return res.status(200).json({ errorMessage: "Data Retrieved" });
+        const teacherDataA = await Teacher.find();
+        console.log("Data Retrieved");
+        return res.status(200).json({ teacherDataA });
     }catch (error) {
         console.error(error);
         return res.status(500).json({ errorMessage: "Data Could Not Be Retrieved" });
