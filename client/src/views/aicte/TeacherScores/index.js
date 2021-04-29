@@ -6,6 +6,7 @@ import {
     useRouteMatch 
 } from 'react-router-dom';
 import TeacherScoresList from './TeacherScoresList';
+import SingleTeacher from './SingleTeacher';
 
 
 const TeacherScores = () => {
@@ -16,8 +17,8 @@ const TeacherScores = () => {
             <Route exact path={path}>
                 <TeacherScoresList/>
             </Route>
-            <Route >
-                
+            <Route path={`${path}/:name`}>
+                <SingleTeacher/>
             </Route>
         </Switch>
     )

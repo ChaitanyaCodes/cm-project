@@ -45,7 +45,7 @@ const TeacherScoresList = () => {
     }, []);
 
     useEffect(()=>{
-        setYear(currentYear);
+        setYear("Chose a year");
     },[])
 
     useEffect(()=>{
@@ -59,12 +59,12 @@ const TeacherScoresList = () => {
     }, [year])
 
     useEffect(() => {
-        console.log(tempTeacherData);
+        // console.log(tempTeacherData);
         setTempTeacherDataState(tempTeacherData);
     }, [year])
 
     function handleItemClick(){
-        console.log("clicked");
+        console.log("clicked teacher");
     }
     
 
@@ -88,7 +88,10 @@ const TeacherScoresList = () => {
                         <CCol 
                             xs="12" sm="6" lg="4" 
                             key={item.fullName} >
-                            <Link to>
+                            <Link to={{
+                                pathname:`${url}/${item.fullName}`,
+                                item,
+                            }}>
                                 <CWidgetIcon
                                     
                                     text={item.fullName} 
