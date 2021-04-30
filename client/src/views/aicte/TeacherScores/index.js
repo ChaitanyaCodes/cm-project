@@ -1,15 +1,28 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react';
+import { 
+    Link, 
+    Switch,
+    Route,
+    useRouteMatch 
+} from 'react-router-dom';
+import TeacherScoresList from './TeacherScoresList';
+import SingleTeacher from './SingleTeacher';
 
-const TeacherScores = (props) => {
+
+const TeacherScores = () => {
+    let { path, url } = useRouteMatch();
+
     return(
-        <div>Teacher Scores tables will come here </div>
+        <Switch>
+            <Route exact path={path}>
+                <TeacherScoresList/>
+            </Route>
+            <Route path={`${path}/:name`}>
+                <SingleTeacher/>
+            </Route>
+        </Switch>
     )
 }
 
-export default TeacherScores
-
-
-
-
-
+export default TeacherScores;
 
