@@ -1,18 +1,21 @@
 import React, { useState , Fragment} from "react";
-import { CCard, CCardBody, CCardGroup, CCardHeader, CCol, CWidgetIcon, } from "@coreui/react";
+import { 
+  CCard, 
+  CCardBody, 
+  CCardGroup, 
+  CCardHeader, 
+  CCol, 
+  CWidgetIcon,
+  CListGroup,
+  CListGroupItem, } from "@coreui/react";
 import {
-  CChartBar,
   CChartLine,
-  CChartDoughnut,
-  CChartRadar,
-  CChartPie,
-  CChartPolarArea,
 } from "@coreui/react-chartjs";
 import CIcon from '@coreui/icons-react';
 import {useLocation} from 'react-router-dom';
 
 function SingleTeacher(props) {
-  const [years, setYears] = useState([]);
+  const [years] = useState([]);
   const location = useLocation();
   const teacherDetails = location.item;
   var scores = [];
@@ -51,23 +54,35 @@ function SingleTeacher(props) {
         </CCardBody>
       </CCard>
 
-      <h2>Semester wise</h2>
-      <h2>subject wise</h2>
+      <h2>Semester Score</h2>
+      <CCardGroup className="mb-4" >
+        {teacherDetails.aicteScores.map( (item) => {
+                      return(
+                          <CCol 
+                              xs="12" sm="6" lg="4" 
+                              key={item._id} >
+                                  <CListGroup>
+                                    <CListGroupItem>Year: {item.year}</CListGroupItem>
+                                    <CListGroupItem>Odd Term Score: {item.oddSemAvg.$numberDecimal}</CListGroupItem>
+                                    <CListGroupItem>Even Term Score: {item.evenSemAvg.$numberDecimal}</CListGroupItem>
+                                  </CListGroup>
+                          </CCol>
+                      )
+                  })}
+      </CCardGroup>
+      <h2>Subject Score</h2>
       <CCardGroup className="mb-4" >
         {teacherDetails.subjects.map( (item) => {
                       return(
                           <CCol 
                               xs="12" sm="6" lg="4" 
                               key={item._id} >
-                                  <CWidgetIcon
-                                      text={item.subjectName} 
-                                      header={item.subjectAicteScore.$numberDecimal} 
-                                      color="info" iconPadding={false}>
-                                      <CIcon 
-                                              width={24} 
-                                              name="cil-user" 
-                                              className="mx-5"/>
-                                  </CWidgetIcon>
+                                  <CListGroup>
+                                    <CListGroupItem>{item.subjectName}</CListGroupItem>
+                                    <CListGroupItem>Score: {item.subjectAicteScore.$numberDecimal}</CListGroupItem>
+                                    <CListGroupItem>Year: {item.year}</CListGroupItem>
+                                    <CListGroupItem>Term: {item.term}</CListGroupItem>
+                                  </CListGroup>
                           </CCol>
                       )
                   })}
