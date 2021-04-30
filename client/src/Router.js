@@ -1,38 +1,42 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Login from "./components/auth/login";
 import SignUp from './components/auth/SignUp';
-import Dashboard from './components/dashboard/Dashboard'
 import AuthContext from "./context/AuthContext";
+import './scss/style.scss';
+
+const loading = (
+  <div className="pt-3 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+)
+
+// Containers
+const TheLayout = React.lazy(() => import('./containers/TheLayout'));
 
 function Router() {
   const { loggedIn } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
-      <Switch>
-      <Route exact path="/">
-          <Login/>
-        </Route>
-        
-        {loggedIn === false && (
-          <>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/signup">
-              <SignUp />
-            </Route>
-          </>
-        )}
-        {loggedIn === true && (
-          <>
-            <Route path="/dashboard">
-              <Dashboard/>
-            </Route>
-          </>
-        )}
-      </Switch>
+      <React.Suspense fallback={loading}>
+        <Switch>
+          
+          
+          {loggedIn === false && (
+            <>
+              <Route exact path="/" component={Login}/>
+              <Route path="/login" component={Login} />
+              <Route exact path="/signup" component={SignUp} />
+            </>
+          )}
+          {loggedIn? (
+            <>
+              <Route path="/" name="Home" render={props => <TheLayout {...props}/>} />
+            </>
+          ): <Redirect to="/login" />}
+        </Switch>
+      </React.Suspense>
     </BrowserRouter>
   );
 }

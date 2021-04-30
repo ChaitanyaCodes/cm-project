@@ -55,7 +55,7 @@ export default function SignUp() {
         <h2 >Sign Up</h2>
         <select  className="s-my" name="role" id="role" onChange={selectHandler}
             value={role}>
-            <option default  disabled>Select your role</option>
+            <option value="none" defaultChecked hidden>Select your role</option>
             <option value="1">Student</option>
             <option value="2">Teacher</option>
             <option value="3">Admin</option>

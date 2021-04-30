@@ -1,53 +1,47 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const teacherSchema = new mongoose.Schema(
-    {
-        profile: {
-            name: {type: String},
-            email: {type: String},
-            photo: {type: String},
-            address: {
-                main: {type: String},
-                city: {type: String},
-                district: {type: String},
-                pincode: {type: Number}
-            },
-            experience: {
-                projects: {type: Number},
-                papersPublished: {type: Number},
-                industaryExperience: {type: Number}
-            }
-        },
-        teaching: {
-            years: {
-                year: {type: Date},
-                oddSem: {
-                    teachnigSubjects: {
-                        subject: {
-                            subjectName: {type: String},
-                            subjectCode: {type: String},
-                            totalStudents: {type: Number},
-                            AICTEScore: {type: mongoose.Schema.Types.Decimal128}
-                        },
-                        finalAICTEScoreOddSem: {type : mongoose.Schema.Types.Decimal128}
-                    }
-                },
-                evenSem: {
-                    teachnigSubjects: {
-                        subject: {
-                            subjectName: {type: String},
-                            subjectCode: {type: String},
-                            totalStudents: {type: Number},
-                            AICTEScore: {type: mongoose.Schema.Types.Decimal128}
-                        }
-                    },
-                    finalAICTEScoreEvenSem: {type : mongoose.Schema.Types.Decimal128}
-                },
-                finalAICTEScore: {type : mongoose.Schema.Types.Decimal128}
-            }
-        }
-    }
-);
+const teacherSchema = new mongoose.Schema({
+  fullName: { type: String },
+  email: { type: String },
+  profile: {
+    photo: { type: String },
+    address: {
+      main: { type: String },
+      city: { type: String },
+      district: { type: String },
+      pincode: { type: Number },
+    },
+    experience: {
+      project: { type: Number },
+      papersPublished: { type: Number },
+      industryExperience: { type: Number },
+    },
+  },
+  subjects: {
+    type: [
+      {
+        year: { type: Number },
+        term: { type: String },
+        subjectName: { type: String },
+        totalStudents: { type: Number },
+        subjectAicteScore: { type: mongoose.Schema.Types.Decimal128 },
+      },
+    ],
+  },
+  aicteScores: {
+    type: [
+      {
+        year: { type: Number },
+        oddSemAicteScore: { type: [mongoose.Schema.Types.Decimal128] },
+        evenSemAicteScore: { type: [mongoose.Schema.Types.Decimal128] },
+        oddSemAvg: { type: mongoose.Schema.Types.Decimal128 },
+        evenSemAvg: { type: mongoose.Schema.Types.Decimal128 },
+        AICTE_SCORE: { type: mongoose.Schema.Types.Decimal128 },
+      },
+    ],
+  },
+});
+
 const Teacher = mongoose.model("teacher", teacherSchema);
 
 export default Teacher;
