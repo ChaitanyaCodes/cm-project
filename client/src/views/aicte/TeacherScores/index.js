@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { 
-    Link, 
+import React from 'react';
+import {  
     Switch,
     Route,
     useRouteMatch 
@@ -10,7 +9,7 @@ import SingleTeacher from './SingleTeacher';
 
 
 const TeacherScores = () => {
-    let { path, url } = useRouteMatch();
+    let { path } = useRouteMatch();
 
     return(
         <Switch>

@@ -73,17 +73,17 @@ function SingleTeacher(props) {
       <h2>Subject Score</h2>
       <CCardGroup className="mb-4" >
         {teacherDetails.subjects.map( (item) => {
-                      return(
-                          <CCol 
-                              xs="12" sm="6" lg="4" 
-                              key={item._id} >
-                                  <CListGroup>
-                                    <CListGroupItem>{item.subjectName}</CListGroupItem>
-                                    <CListGroupItem>Score: {item.subjectAicteScore.$numberDecimal}</CListGroupItem>
-                                    <CListGroupItem>Year: {item.year}</CListGroupItem>
-                                    <CListGroupItem>Term: {item.term}</CListGroupItem>
-                                  </CListGroup>
-                          </CCol>
+                      return( 
+                                <CCol 
+                                xs="12" sm="6" lg="4" 
+                                key={item._id} >
+                                    <CListGroup>
+                                      <CListGroupItem>{item.subjectName}</CListGroupItem>
+                                      <CListGroupItem>Score: {item.subjectAicteScore.$numberDecimal}</CListGroupItem>
+                                      <CListGroupItem>Year: {item.year}</CListGroupItem>
+                                      <CListGroupItem>Term: {item.term}</CListGroupItem>
+                                    </CListGroup>
+                                </CCol>
                       )
                   })}
       </CCardGroup>
