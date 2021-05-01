@@ -16,15 +16,15 @@ var csvFilePath = "";
 var calcAvg = (inArray) => {
   var size = inArray.length;
   var sum = lodash.sum(inArray);
-  return parseFloat((sum / size).toFixed(3));
+  return parseFloat((sum / size).toFixed(2));
 };
 var calcOf45 = (totalOne, totalTwo, arr) => {
   var totalThree = lodash.sum(arr);
-  var total = parseFloat(totalOne + totalTwo + totalThree).toFixed(3);
+  var total = parseFloat(totalOne + totalTwo + totalThree).toFixed(2);
   return total;
 };
 var calcOf25 = (total) => {
-  return parseFloat((25 * total) / 45).toFixed(3);
+  return parseFloat((25 * total) / 45).toFixed(2);
 };
 router.post("/csv", async (req, res) => {
   try {
@@ -81,17 +81,20 @@ router.post("/csv", async (req, res) => {
           // Calculating Averages
           var effectivenessAvg = calcAvg(effectiveness);
           var supportAvg = calcAvg(support);
+          var extraAvg = calcAvg(extra);
           var totalOf45 = calcOf45(supportAvg, effectivenessAvg, extra);
           var totalOf25 = calcOf25(totalOf45);
           // console.log(totalOf25);
           arrOf25.push(parseFloat(totalOf25));
           var formInput = {
-			year,
+            teacherName,
+            year,
             effectiveness,
             support,
             extra,
             effectivenessAvg,
             supportAvg,
+            extraAvg,
             totalOf45,
             totalOf25,
           };
@@ -356,11 +359,58 @@ router.post("/csv", async (req, res) => {
 				  if (err) {
 					console.log(err);
 				  } else {
-					console.log("Aicte score successfully set.");
+					console.log("Updated AICTE score");
 				  }
 				}
 			  );
 		  }
+        });
+        // Adding Extra Score to teacher
+        const dbstudent = await Student.find(
+          {"formInput.teacherName": teacherName, "formInput.year": year}
+        );
+        var effectivenessAvgArray = [];
+        var supportAvgArray = [];
+        var extraAvgArray = [];
+        dbstudent.forEach(student => {
+          effectivenessAvgArray.push(parseFloat(student.formInput.effectivenessAvg));
+          supportAvgArray.push(parseFloat(student.formInput.supportAvg));
+          extraAvgArray.push(parseFloat(student.formInput.extraAvg));
+        });
+        var finalEffectivenessAvg = calcAvg(effectivenessAvgArray);
+        var finalSupportAvg = calcAvg(supportAvgArray);
+        var finalExtraAvg = calcAvg(extraAvgArray);
+        const avgDbTeacher = await Teacher.findOne({
+          aicteScores: { $elemMatch: { year: year } },
+          fullName: teacherName,
+        });
+        var aicteScoresArr = [];
+        aicteScoresArr = avgDbTeacher.aicteScores;
+        aicteScoresArr.forEach(async (object) => {
+          const updatingeffectivenessAvg = await Teacher.updateOne(
+            {
+              aicteScores: { $elemMatch: { year: year } },
+              fullName: teacherName,
+            },
+            {
+              $set: {
+                "aicteScores.$.effectivenessAvg": finalEffectivenessAvg,
+                "aicteScores.$.supportAvg": finalSupportAvg,
+                "aicteScores.$.extraAvg": finalExtraAvg,
+              },
+            },
+            {
+              new: true,
+              upsert: true, //updated if found insert if not found
+            },
+            function (err) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("Updated Averages");
+              }
+            }
+          );
         });
         res.status(200).json({ errorMessage: "Data Stored" });
       });
