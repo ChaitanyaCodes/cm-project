@@ -10,7 +10,8 @@ import {
   CListGroupItem, } from "@coreui/react";
 import {
   CChartLine,
-} from "@coreui/react-chartjs";
+  CChartPie,
+} from '@coreui/react-chartjs';
 import CIcon from '@coreui/icons-react';
 import {useLocation} from 'react-router-dom';
 
@@ -66,6 +67,28 @@ function SingleTeacher(props) {
                                     <CListGroupItem>Odd Term Score: {item.oddSemAvg.$numberDecimal}</CListGroupItem>
                                     <CListGroupItem>Even Term Score: {item.evenSemAvg.$numberDecimal}</CListGroupItem>
                                   </CListGroup>
+                                  <CCard>
+                                    <CCardBody>
+                                      <CChartPie
+                                        datasets={[
+                                          {
+                                            backgroundColor: [
+                                              '#41B883',
+                                              '#E46651',
+                                              '#00D8FF',
+                                            ],
+                                            data: [item.effectivenessAvg.$numberDecimal, item.supportAvg.$numberDecimal, item.extraAvg.$numberDecimal]
+                                          }
+                                        ]}
+                                        labels={['effectiveness', 'support', 'extra']}
+                                        options={{
+                                          tooltips: {
+                                            enabled: true
+                                          }
+                                        }}
+                                      />
+                                    </CCardBody>
+                                  </CCard>
                           </CCol>
                       )
                   })}
