@@ -9,40 +9,19 @@ const studentAcademics = new mongoose.Schema({
     type: [
       {
         year: { type: Number },
-        it1: {
-          type: {
-            subject: { type: Number },
-          },
+        term: { type: String },
+        subjects: {
+          type: [
+            {
+              subjectName: { type: String },
+              sem: { type: Number },
+              it1: { type: Number },
+              it2: { type: Number },
+              semScore: { type: Number },
+            },
+          ],
         },
-        it2: {
-          type: {
-            subject: { type: Number },
-          },
-        },
-        it3: {
-          type: {
-            subject: { type: Number },
-          },
-        },
-        it4: {
-          type: {
-            subject: { type: Number },
-          },
-        },
-
-        odd: {
-          type: {
-            subject: { type: Number },
-            result: { type: Number },
-          },
-        },
-
-        even: {
-          type: {
-            subject: { type: Number },
-            result: { type: Number },
-          },
-        },
+        result: { type: Number },
       },
     ],
   },
