@@ -2,18 +2,11 @@ import React from "react";
 import {
   CCard,
   CCardBody,
-  CCardGroup,
-  CCardHeader,
-  CRow,
   CCol,
   CListGroup,
   CListGroupItem,
-  CDropdown,
-  CDropdownToggle,
-  CDropdownMenu,
-  CDropdownItem,
 } from "@coreui/react";
-import { CChartLine, CChartPie } from "@coreui/react-chartjs";
+import { CChartPie } from "@coreui/react-chartjs";
 
 function YearSem(item) {
   return (

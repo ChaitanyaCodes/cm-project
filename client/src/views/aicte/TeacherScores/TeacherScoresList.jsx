@@ -4,8 +4,6 @@ import axios from "axios";
 import {
   CCardGroup,
   CCol,
-  CLink,
-  CRow,
   CWidgetIcon,
   CDropdown,
   CDropdownToggle,
@@ -23,7 +21,7 @@ const TeacherScoresList = () => {
   var tempTeacherData = [];
   let date = new Date();
   let currentYear = date.getFullYear();
-  let { path, url } = useRouteMatch();
+  let { url } = useRouteMatch();
 
   for (var addYear = 2020; currentYear >= addYear; addYear++) {
     years.push(addYear);
@@ -48,6 +46,7 @@ const TeacherScoresList = () => {
         if (year === trYear.year) {
           tempTeacherData.push(item);
         }
+        return;
       });
     });
   }, [year]);
@@ -76,7 +75,6 @@ const TeacherScoresList = () => {
       <br />
       <CCardGroup className="mb-4">
         {tempTeacherDataState.map((item) => {
-          const scoresArrLength = item.aicteScores.length;
           return (
             <CCol xs="12" sm="6" lg="4" key={item.fullName}>
               <Link
