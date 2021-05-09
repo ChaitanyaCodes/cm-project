@@ -50,7 +50,7 @@ const Dashboard = () => {
               </CButtonGroup>
             </CCol>
           </CRow>
-          <MainChartExample style={{height: '300px', marginTop: '40px'}}/>
+          {/* <MainChartExample style={{height: '300px', marginTop: '40px'}}/> */}
         </CCardBody>
         <CCardFooter>
           <CRow className="text-center">
