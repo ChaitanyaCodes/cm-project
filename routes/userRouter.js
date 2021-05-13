@@ -27,7 +27,7 @@ router.post('/signup', async (req, res) => {
             return res
             .status(400)
             .json({errorMessage: "Please Enter Password of atleast 8 characters."});
-        if(role == 2 || role == 3 && !key)
+        if((role == 2 && !key) || (role == 3 && !key))
             return res
             .status(400)
             .json({errorMessage: "Enter the Key."});
