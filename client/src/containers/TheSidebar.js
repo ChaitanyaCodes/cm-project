@@ -12,7 +12,7 @@ import {
   CSidebarNavItem,
 } from '@coreui/react'
 
-import CIcon from '@coreui/icons-react'
+import eduLogo from '../assets/imgs/eduLogo.png';
 
 // sidebar nav config
 import navigation from './_nav'
@@ -27,6 +27,9 @@ const TheSidebar = () => {
       onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
+      <img src={eduLogo} alt="Edu management Logo" className="c-sidebar-brand-full" height={80}/>
+      <img src={eduLogo} alt="Edu management Logo" className="c-sidebar-brand-minimized" height={80}/>
+      
         {/* <CIcon
           className="c-sidebar-brand-full"
           name="logo-negative"

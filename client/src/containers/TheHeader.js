@@ -12,6 +12,7 @@ import {
   CLink
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import eduLogo from '../assets/imgs/eduLogo.png';
 
 // routes config
 import routes from '../routes'
@@ -43,6 +44,7 @@ const TheHeader = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
+      <img src={eduLogo} alt="Edu management Logo" name="logo" height={75} alt="logo"/>
         {/* <CIcon name="logo" height="48" alt="Logo"/> */}
       </CHeaderBrand>
 
@@ -50,12 +52,12 @@ const TheHeader = () => {
         <CHeaderNavItem className="px-3" >
           <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
         </CHeaderNavItem>
-        <CHeaderNavItem  className="px-3">
+        {/* <CHeaderNavItem  className="px-3">
           <CHeaderNavLink to="/users">Users</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
           <CHeaderNavLink>Settings</CHeaderNavLink>
-        </CHeaderNavItem>
+        </CHeaderNavItem> */}
       </CHeaderNav>
 
       <CSubheader className="px-3 justify-content-between">

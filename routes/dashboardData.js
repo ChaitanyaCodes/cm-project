@@ -31,6 +31,6 @@ router.get("/userData", async (req, res) => {
     }catch (error) {
         console.error(error);
         return res.status(500).json({ errorMessage: "Data Could Not Be Retrieved" });
-      }
+    }
 });
 export default router;
