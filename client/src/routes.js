@@ -11,10 +11,10 @@ const TeacherScores = React.lazy(() => import('./views/aicte/TeacherScores'));
 const UploadCsv = React.lazy(() => import('./views/aicte/UploadCsv'));
 
 //student imports
-const EnrollStudent = React.lazy(() => import('./views/aicte/TeacherScores'));
-const StudentDataEntry = React.lazy(() => import('./views/aicte/TeacherScores'));
-const StudentData = React.lazy(() => import('./views/aicte/TeacherScores'));
-const PromoteStudent = React.lazy(() => import('./views/aicte/TeacherScores'));
+const EnrollStudent = React.lazy(() => import('./views/student/EnrollStudent'));
+const StudentDataEntry = React.lazy(() => import('./views/student/StudentDataEntry'));
+const StudentData = React.lazy(() => import('./views/student/StudentData'));
+const PromoteStudent = React.lazy(() => import('./views/student/PromoteStudent'));
 
 
 
