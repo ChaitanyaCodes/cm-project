@@ -45,7 +45,7 @@ function SingleTeacher(props) {
     <Fragment>
       <h2>Score Over Years</h2>
       <CRow>
-        <CCard>
+        <CCard >
           <CCardHeader>{teacherDetails.fullName}</CCardHeader>
           <CCardBody>
             <CChartLine

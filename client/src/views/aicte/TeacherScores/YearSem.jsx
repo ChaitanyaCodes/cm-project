@@ -11,12 +11,12 @@ import { CChartPie } from "@coreui/react-chartjs";
 function YearSem(item) {
   return (
     <CCol xs="12" sm="6" lg="4" key={item.yearData._id}>
-      <CListGroup>
-        <CListGroupItem>Year: {item.yearData.year}</CListGroupItem>
-        <CListGroupItem>
+      <CListGroup >
+        <CListGroupItem className="bg-gradient-success">Year: {item.yearData.year}</CListGroupItem>
+        <CListGroupItem className="text-danger">
           Odd Term Score: {item.yearData.oddSemAvg.$numberDecimal}
         </CListGroupItem>
-        <CListGroupItem>
+        <CListGroupItem className="text-primary">
           Even Term Score: {item.yearData.evenSemAvg.$numberDecimal}
         </CListGroupItem>
       </CListGroup>
