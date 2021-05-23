@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import {
+    CAlert
+} from '@coreui/react'
 
 
 const FileUpload = () => {
@@ -49,6 +53,21 @@ const FileUpload = () => {
                 </div>
                 <input type="submit" value="Upload" className="btn btn-primary btn-block mt-4" />
             </form>
+            <br/>
+            <CAlert color="success">
+                <h4 className="alert-heading">Upload guide</h4>
+                <p>
+                    The upload file should be compulsorily in <strong>CSV</strong> format.
+                </p>
+                <hr />
+                <p className="mb-0">
+                    Make sure the Google form was duplicated from <a href="https://docs.google.com/forms/d/1e93ROsaOGYcctQRh1AZMN2RMNpWkHlq0gWLGGyVy7pQ/edit" target={"_blank"}>here</a>.
+                </p>
+                <hr />
+                <p className="mb-0">
+                    For proper guide on creating an <strong>FORM</strong> follow the <a href="https://codeaddicts.bit.ai/docs/view/UmDoUMwc9K5zxDqx" target={"_blank"}>Documentation</a>.
+                </p>
+            </CAlert>
             <ToastContainer />
         </Fragment>
             
