@@ -23,7 +23,7 @@ const TeacherScoresList = () => {
   let currentYear = date.getFullYear();
   let { url } = useRouteMatch();
 
-  for (var addYear = 2020; currentYear >= addYear; addYear++) {
+  for (var addYear = 2018; currentYear >= addYear; addYear++) {
     years.push(addYear);
   }
 
