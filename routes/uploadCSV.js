@@ -45,7 +45,7 @@ router.post("/csv", async (req, res) => {
       .fromFile(csvFilePath)
       .then(async (json) => {
         // form Common Details
-        var term = json[0].Term;
+        var term = json[1].Term;
         var teacherName = json[0].TeacherName;
         var subjectName = json[0].Subject;
         var year = parseInt(json[0].Year);
@@ -59,6 +59,14 @@ router.post("/csv", async (req, res) => {
         var arrOf25 = [];
         var oddTerm = "Odd";
         var evenTerm = "Even";
+
+        // File Upload Validation
+        const getTeacher = await Teacher.find({subjects: { $elemMatch: { year : year, subjectName : subjectName}}, fullName: teacherName});
+        if(getTeacher.length){
+          console.log("Data present");
+        res.status(200).json({ errorMessage: "Data already present" });
+        }
+        else{
         for (var count = 0; count < size; count++) {
           var effectivenessCount = 0;
           var supportCount = 0;
@@ -181,9 +189,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Pushed to oddSemAicteScore");
               }
+              //  else {
+              //   console.log("Pushed to oddSemAicteScore");
+              // }
             }
           );
         } else {
@@ -205,9 +214,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Pushed to evenSemAicteScore");
-              }
+              } 
+              // else {
+              //   console.log("Pushed to evenSemAicteScore");
+              // }
             }
           );
         }
@@ -249,9 +259,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Updated the OddSemAvg");
-              }
+              } 
+              // else {
+              //   console.log("Updated the OddSemAvg");
+              // }
             }
           );
 
@@ -284,9 +295,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Updated the evenSemAvg");
               }
+              // else {
+              //   console.log("Updated the evenSemAvg");
+              // }
             }
           );
           //getting AICET_SCORE
@@ -308,9 +320,10 @@ router.post("/csv", async (req, res) => {
 			      function (err) {
 			        if (err) {
 			          console.log(err);
-			        } else {
-			          console.log("Aicte score successfully set.");
 			        }
+              // else {
+			        //   console.log("Aicte score successfully set.");
+			        // }
 			      }
 			    );
 		  }
@@ -332,9 +345,10 @@ router.post("/csv", async (req, res) => {
 				function (err) {
 				  if (err) {
 					console.log(err);
-				  } else {
-					console.log("Aicte score successfully set.");
 				  }
+          // else {
+					// console.log("Aicte score successfully set.");
+				  // }
 				}
 			  );
 		  }
@@ -358,9 +372,10 @@ router.post("/csv", async (req, res) => {
 				function (err) {
 				  if (err) {
 					console.log(err);
-				  } else {
-					console.log("Updated AICTE score");
 				  }
+          // else {
+					// console.log("Updated AICTE score");
+				  // }
 				}
 			  );
 		  }
@@ -406,14 +421,17 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Updated Averages");
               }
+              // else {
+              //   console.log("Updated Averages");
+              // }
             }
           );
         });
+        console.log("File Uploaded");
         res.status(200).json({ errorMessage: "Data Stored" });
-      });
+      }
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ errorMessage: "File could not upload" });
