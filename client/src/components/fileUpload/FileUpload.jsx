@@ -23,22 +23,30 @@ const FileUpload = () => {
         formData.append('file', file);
 
         try {
+            console.log("before upload");
             const res = await axios.post('http://localhost:5000/upload/csv', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
-            })
+            });
+            await console.log("after upload");
+            await console.log(res);
 
             toast.success("file uploaded to the database.");
-            const { fileName, filePath } = res.data;
-            setUploadedFile({ fileName, filePath });
+            // const { fileName, filePath } = res.data;
+            // setUploadedFile({ fileName, filePath });
         } catch(err) {
-            console.log(err);
-            // if(err.response.status == 500) {
-            //     console.log("There was an error in connecting the server");
-            // } else {
-            //     console.log(err.response.data.msg);
-            // }
+            console.log(err.response.data.msg);
+            if(err.response.status == 400) {
+                toast.error(err.response.data.msg);
+            } else if(err.response.status == 500) {
+                toast.error("unable to move file");
+            }else if(err.response.status == 409){
+                console.log(err.response.data.msg);
+                toast.error(err.response.data.msg);
+            } else {
+                console.log(err);
+            }
         }
     }
 

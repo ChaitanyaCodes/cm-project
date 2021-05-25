@@ -7,7 +7,6 @@ import fileUpload from "express-fileupload";
 import path from "path";
 
 const __dirname = path.resolve();
-
 const router = express.Router();
 router.use(fileUpload());
 
@@ -41,7 +40,7 @@ router.post("/csv", async (req, res) => {
         return res.status(500).send(err);
       }
     });
-    csvtojson()
+    await csvtojson()
       .fromFile(csvFilePath)
       .then(async (json) => {
         // form Common Details
@@ -64,7 +63,7 @@ router.post("/csv", async (req, res) => {
         const getTeacher = await Teacher.find({subjects: { $elemMatch: { year : year, subjectName : subjectName}}, fullName: teacherName});
         if(getTeacher.length){
           console.log("Data present");
-        res.status(200).json({ errorMessage: "Data already present" });
+          res.status(400).json({ msg: "data already present" });
         }
         else{
         for (var count = 0; count < size; count++) {
