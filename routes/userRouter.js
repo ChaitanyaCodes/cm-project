@@ -10,7 +10,7 @@ const teacherKey = "welcometeacher";
 const adminKey = "manager";
 router.post("/signup", async (req, res) => {
   try {
-    const { email, password, confirmPwd, fullName, role, key } = req.body;
+    const { email, password, confirmPwd, fullName, role} = req.body;
     // signup validation
     if (!email)
       return res.status(400).json({ errorMessage: "Please Enter your Email." });
@@ -22,13 +22,6 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({
         errorMessage: "Please Enter Password of atleast 8 characters.",
       });
-    if ((role == 2 && !key) || (role == 3 && !key))
-      return res.status(400).json({ errorMessage: "Enter the Key." });
-    if (role == 2 && key !== teacherKey)
-      return res.status(400).json({ errorMessage: "Wrong Key." });
-    if (role == 3 && key !== adminKey)
-      return res.status(400).json({ errorMessage: "Wrong Key." });
-
     const existingUser = await User.findOne({ email });
     if (password !== confirmPwd)
       return res
