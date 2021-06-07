@@ -7,10 +7,10 @@ const _nav = [
     name: "Dashboard",
     to: "/dashboard",
     icon: <CIcon name="cil-home" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
+    // badge: {
+    //   color: "info",
+    //   text: "NEW",
+    // },
   },
   {
     _tag: "CSidebarNavDropdown",
@@ -18,6 +18,11 @@ const _nav = [
     route: "/aicte-score",
     icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
     _children: [
+      {
+        _tag: "CSidebarNavItem",
+        name: "What's AICTE Score?",
+        to: "/aicte-score/description",
+      },
       {
         _tag: "CSidebarNavItem",
         name: "Teacher's Score",
@@ -31,34 +36,6 @@ const _nav = [
     ],
   },
   {
-    _tag: "CSidebarNavDropdown",
-    name: "Student Academics",
-    route: "/student-academics",
-    icon: <CIcon name="cil-user" customClasses="c-sidebar-nav-icon" />,
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Enroll Student",
-        to: "/student/enroll-student",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Student Data Entry",
-        to: "/student/student-data-entry",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Student Academic Data",
-        to: "/student/student-data-view",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Promote Student",
-        to: "/student/promote-student",
-      },
-    ],
-  },
-  {
     _tag: "CSidebarNavItem",
     name: "Logout",
     to: "/logout",
@@ -67,3 +44,32 @@ const _nav = [
 ];
 
 export default _nav;
+
+// {
+//   _tag: "CSidebarNavDropdown",
+//   name: "Student Academics",
+//   route: "/student-academics",
+//   icon: <CIcon name="cil-user" customClasses="c-sidebar-nav-icon" />,
+//   _children: [
+//     {
+//       _tag: "CSidebarNavItem",
+//       name: "Enroll Student",
+//       to: "/student/enroll-student",
+//     },
+//     {
+//       _tag: "CSidebarNavItem",
+//       name: "Student Data Entry",
+//       to: "/student/student-data-entry",
+//     },
+//     {
+//       _tag: "CSidebarNavItem",
+//       name: "Student Academic Data",
+//       to: "/student/student-data-view",
+//     },
+//     {
+//       _tag: "CSidebarNavItem",
+//       name: "Promote Student",
+//       to: "/student/promote-student",
+//     },
+//   ],
+// },
