@@ -1,6 +1,6 @@
 import React from "react";
 import { CChartLine } from "@coreui/react-chartjs";
-import { getStyle, hexToRgba } from "@coreui/utils";
+import { hexToRgba } from "@coreui/utils";
 
 const MainChartExample = (attributes) => {
   const teacherDetails = attributes.teacherDetails;

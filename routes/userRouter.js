@@ -45,13 +45,16 @@ router.post("/signup", async (req, res) => {
 
     const data = {
       from: email,
-      to: "liviofranm@gmail.com",
+      to: "buntytemkar6042@gmail.com",
       subject: "Account Activation Link",
-      html: `
-                <h2>Click on below link to activate the account</h2>
-                <p>${process.env.CLIENT_URL}/activate/acc${token}</p>
-                <a href='${process.env.CLIENT_URL}/activate/acc${token}'><button>Click Here</button></a>
-            `,
+      html: `<div>
+              <h2>Please Activate Account</h2>
+              <a href='${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}'>
+                <button>Yes, Activate account</button>
+              </a>
+              <p>Please confirm with ${fullName} and Activate His/Her account.</p>
+              <p>Ignore this email, If any of the staff member has not initiated this.</p>
+            <div/>`,
     };
     mg.messages().send(data, function (error, body) {
       if (error) {
@@ -133,3 +136,14 @@ router.get("/loggedIn", (req, res) => {
   }
 });
 export default router;
+
+
+{/* <p>${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}</p> */}
+
+
+{/* <div>
+              <h2>Please Activate Account</h2>
+              <a href='${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}'>
+                <button>Yes, Activate account</button>
+              </a>
+            <div/>` */}
