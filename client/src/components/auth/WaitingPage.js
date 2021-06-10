@@ -14,14 +14,16 @@ function WaitingPage() {
                 <CRow className="mt-2">
                     
                     <CCol className="align-self-center ">
-                        <h2>Account Request Sent</h2>
-                        <div className="p-3 border bg-light rounded">
+                        <h2 style={{fontWeight: 'bold'}} className="bold">Account  Activation  Request  Sent</h2>
+                        <div className="p-3 border bg-light rounded bg-gradient-secondary">
                             <img src={WaitingIcon} alt="waiting Icon" height={200} width={500}/>
                         </div>
                         <br/>
                         <br/>
                         <p className="mt-2 text-info">Request to create your account has been initiated.</p>
                         <p>Please contact Admin to get your account activated.</p>
+                        <a style={{marginLeft:'250px'}} className="mt-2 text-info" href="http://localhost:3000/login">Login</a>
+
                     </CCol>
                 </CRow>
             </CContainer>

@@ -37,7 +37,7 @@ export default function SignUp() {
         signUpData
       );
       await getLoggedIn();
-      // history.push("/auth/waiting");
+      history.push("/auth/waiting");
     } catch (err) {
       toast.error(err.response.data.errorMessage)
       console.log(err.response.data.errorMessage);

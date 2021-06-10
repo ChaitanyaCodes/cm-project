@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
 
     const data = {
       from: email,
-      to: "liviofranm@gmail.com",
+      to: "buntytemkar6042@gmail.com",
       subject: "Account Activation Link",
       html: `<div style="background:#D3D3D3; text-align:center; width:35%; margin:auto; border-radius:10px; padding:10px;">
               <h2 style="color:black;">Please Activate Account</h2>
