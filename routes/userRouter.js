@@ -40,20 +40,20 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign(
       { email, passwordHash, fullName, role },
       process.env.JWT_SECRET,
-      { expiresIn: "30m" }
+      { expiresIn: "360m" }
     );
 
     const data = {
       from: email,
-      to: "buntytemkar6042@gmail.com",
+      to: "liviofranm@gmail.com",
       subject: "Account Activation Link",
-      html: `<div>
-              <h2>Please Activate Account</h2>
+      html: `<div style="background:#D3D3D3; text-align:center; width:35%; margin:auto; border-radius:10px; padding:10px;">
+              <h2 style="color:black;">Please Activate Account</h2>
               <a href='${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}'>
-                <button>Yes, Activate account</button>
+                <button style="background:green; color:white; padding:14px 16px; border-radius:5px; border:none;">Yes, Activate account</button>
               </a>
-              <p>Please confirm with ${fullName} and Activate His/Her account.</p>
-              <p>Ignore this email, If any of the staff member has not initiated this.</p>
+              <p style="color:black;">Please confirm with ${fullName} and activate His/Her account.</p>
+              <p style="color:black;">Ignore this email, If any of the staff member has not initiated this.</p>
             <div/>`,
     };
     mg.messages().send(data, function (error, body) {
@@ -65,13 +65,6 @@ router.post("/signup", async (req, res) => {
       console.log("Mail sent");
       console.log(body);
     });
-
-    // // Send the token in a HTTP-only cookie
-    // res
-    //     .cookie("token", token, {
-    //         httpOnly: true,
-    //     })
-    //     .send("userCreated");
   } catch (err) {
     console.error(err);
     res.status(500).send("erroroccured");
@@ -136,14 +129,3 @@ router.get("/loggedIn", (req, res) => {
   }
 });
 export default router;
-
-
-{/* <p>${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}</p> */}
-
-
-{/* <div>
-              <h2>Please Activate Account</h2>
-              <a href='${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}'>
-                <button>Yes, Activate account</button>
-              </a>
-            <div/>` */}
