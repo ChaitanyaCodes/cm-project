@@ -39,7 +39,7 @@ function ActivateAccount() {
                     
                     <CCol className="align-self-center ">
                         <h2>ACCOUNT ACTIVATION</h2>
-                        <div className="p-3 border bg-light rounded">
+                        <div className="p-3 border bg-light rounded bg-gradient-secondary">
                             <img src={activationIcon} alt="Activation Icon" height={200} width={500}/>
                         </div>
                         <br/>

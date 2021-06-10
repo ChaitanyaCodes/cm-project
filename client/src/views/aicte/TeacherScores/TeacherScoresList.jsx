@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   CCardGroup,
   CCol,
+  CAlert,
   CWidgetIcon,
   CDropdown,
   CDropdownToggle,
@@ -62,6 +63,7 @@ const TeacherScoresList = () => {
 
   return (
     <div>
+      <CAlert color="warning">Department: Computer Engineering</CAlert>
       <CDropdown>
         <CDropdownToggle color="secondary">
           {year ? year : "Select Year"}
