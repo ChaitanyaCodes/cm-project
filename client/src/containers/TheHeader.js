@@ -9,9 +9,7 @@ import {
   CHeaderNavLink,
   CSubheader,
   CBreadcrumbRouter,
-  CLink
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 import eduLogo from '../assets/imgs/eduLogo.png';
 
 // routes config
