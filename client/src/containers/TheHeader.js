@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CHeader,
@@ -11,11 +11,14 @@ import {
   CBreadcrumbRouter,
 } from '@coreui/react'
 import eduLogo from '../assets/imgs/eduLogo.png';
+import Cookies from 'universal-cookie';
 
 // routes config
 import routes from '../routes'
+const cookies = new Cookies();
 
 const TheHeader = () => {
+  const [ userN , setUserN ] = useState({username: ''});
   const dispatch = useDispatch()
   const sidebarShow = useSelector(state => state.sidebarShow)
 
@@ -28,6 +31,12 @@ const TheHeader = () => {
     const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive'
     dispatch({type: 'set', sidebarShow: val})
   }
+
+  useEffect(() => {
+    setUserN({username: cookies.get('username')});
+    console.log(userN);
+  }, [userN]);
+  console.log('test');
 
   return (
     <CHeader withSubheader>
