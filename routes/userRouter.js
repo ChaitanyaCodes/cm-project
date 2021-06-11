@@ -102,7 +102,7 @@ router.post("/login", async (req, res) => {
     
     // set username cookie
     res
-      .cookie("username",'userName')
+      .cookie("username",existingUser.fullName)
     //send response to the client
     res
       .send("logged");
