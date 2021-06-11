@@ -99,6 +99,12 @@ router.post("/login", async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
       })
+    
+    // set username cookie
+    res
+      .cookie("username",existingUser.fullName)
+    //send response to the client
+    res
       .send("logged");
   } catch (err) {
     console.log("catch scope");

@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   CHeader,
   CToggler,
@@ -9,13 +9,19 @@ import {
   CHeaderNavLink,
   CSubheader,
   CBreadcrumbRouter,
-} from '@coreui/react'
+} from '@coreui/react';
+import { 
+  TheHeaderDropdown,
+}  from './index';
 import eduLogo from '../assets/imgs/eduLogo.png';
+import Cookies from 'universal-cookie';
 
 // routes config
 import routes from '../routes'
+const cookies = new Cookies();
 
 const TheHeader = () => {
+  const [ userN , setUserN ] = useState({username: ''});
   const dispatch = useDispatch()
   const sidebarShow = useSelector(state => state.sidebarShow)
 
@@ -28,6 +34,12 @@ const TheHeader = () => {
     const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive'
     dispatch({type: 'set', sidebarShow: val})
   }
+
+  useEffect(()=>{
+    setUserN({username: cookies.get('username')});
+  },[])
+  // setUserN({username: cookies.get('username')});
+  console.log();
 
   return (
     <CHeader withSubheader>
@@ -57,7 +69,10 @@ const TheHeader = () => {
           <CHeaderNavLink>Settings</CHeaderNavLink>
         </CHeaderNavItem> */}
       </CHeaderNav>
-
+      <CHeaderNav className="px-3">
+        {userN.username}
+        <TheHeaderDropdown/>
+      </CHeaderNav>
       <CSubheader className="px-3 justify-content-between">
         <CBreadcrumbRouter 
           className="border-0 c-subheader-nav m-0 px-0 px-md-3" 

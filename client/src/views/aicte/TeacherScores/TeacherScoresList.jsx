@@ -63,7 +63,7 @@ const TeacherScoresList = () => {
 
   return (
     <div>
-      <CAlert color="warning">Department: Computer Engineering</CAlert>
+      <CAlert color="info">Department: Computer Engineering</CAlert>
       <CDropdown>
         <CDropdownToggle color="secondary">
           {year ? year : "Select Year"}
