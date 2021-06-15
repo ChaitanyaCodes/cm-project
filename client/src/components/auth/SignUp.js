@@ -37,7 +37,7 @@ export default function SignUp() {
         signUpData
       );
       await getLoggedIn();
-      history.push("/dashboard");
+      history.push("/auth/waiting");
     } catch (err) {
       toast.error(err.response.data.errorMessage)
       console.log(err.response.data.errorMessage);
@@ -87,15 +87,7 @@ export default function SignUp() {
               value={confirmPwd} className="s-my "
             />
           </div>
-          {
-              role == 2 || role == 3 ? 
-              <input
-                type="password"
-                placeholder="Confirm key"
-                onChange={(e) => setKey(e.target.value)}
-                value={key} className="s-my large"
-              /> : null
-          }
+          {/* key goes here */}
           
           <button type="submit"  className="s-my-btn">Register</button>
           <Link to="/login"><button type="submit" className="s-my-btn">Login</button></Link>
@@ -106,3 +98,12 @@ export default function SignUp() {
   );
 }
 
+// {
+//   role == 2 || role == 3 ? 
+//   <input
+//     type="password"
+//     placeholder="Confirm key"
+//     onChange={(e) => setKey(e.target.value)}
+//     value={key} className="s-my large"
+//   /> : null
+// }

@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Login from "./components/auth/login";
 import SignUp from './components/auth/SignUp';
+import ActivateAccount from './components/auth/ActivateAccount';
+import WaitingPage from './components/auth/WaitingPage';
 import AuthContext from "./context/AuthContext";
 import './scss/style.scss';
 
@@ -21,8 +23,8 @@ function Router() {
     <BrowserRouter>
       <React.Suspense fallback={loading}>
         <Switch>
-          
-          
+          <Route exact path="/auth/activate/:token/:name" component={ActivateAccount}/>
+          <Route exact path="/auth/waiting" component={WaitingPage}/>
           {loggedIn === false && (
             <>
               <Route exact path="/" component={Login}/>

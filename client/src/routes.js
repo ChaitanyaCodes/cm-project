@@ -7,6 +7,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
 const Logout = React.lazy(()=> import('./views/logout'));
 
 //aicte-score imports
+const AicteScoreDescription = React.lazy(() => import('./views/aicte/AicteScoreDescription'));
 const TeacherScores = React.lazy(() => import('./views/aicte/TeacherScores'));
 const UploadCsv = React.lazy(() => import('./views/aicte/UploadCsv'));
 
@@ -25,9 +26,10 @@ const routes = [
   // College management routes
 
   // AICTE-SCORE routes
-  { path: '/aicte-score', name: 'aicte score', component: TeacherScores, exact: true },
+  { path: '/aicte-score', name: 'AICTE Score', component: TeacherScores, exact: true },
+  { path: '/aicte-score/description', name: 'What\'s AICTE Score?', component: AicteScoreDescription },
   { path: '/aicte-score/teacher-scores', name: 'Teacher\'s Scores', component: TeacherScores },
-  { path: '/aicte-score/upload-csv', name: 'Upload Csv', component: UploadCsv },
+  { path: '/aicte-score/upload-csv', name: 'Upload Response CSV', component: UploadCsv },
 
   //Student-Academics routes
   { path: '/student', name: 'Student', component: EnrollStudent, exact: true },
