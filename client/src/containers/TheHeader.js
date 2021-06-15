@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   CHeader,
   CToggler,
@@ -9,14 +9,19 @@ import {
   CHeaderNavLink,
   CSubheader,
   CBreadcrumbRouter,
-  CLink
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+} from '@coreui/react';
+import { 
+  TheHeaderDropdown,
+}  from './index';
+import eduLogo from '../assets/imgs/eduLogo.png';
+import Cookies from 'universal-cookie';
 
 // routes config
 import routes from '../routes'
+const cookies = new Cookies();
 
 const TheHeader = () => {
+  const [ userN , setUserN ] = useState({username: ''});
   const dispatch = useDispatch()
   const sidebarShow = useSelector(state => state.sidebarShow)
 
@@ -29,6 +34,12 @@ const TheHeader = () => {
     const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive'
     dispatch({type: 'set', sidebarShow: val})
   }
+
+  useEffect(()=>{
+    setUserN({username: cookies.get('username')});
+  },[])
+  // setUserN({username: cookies.get('username')});
+  console.log();
 
   return (
     <CHeader withSubheader>
@@ -43,21 +54,25 @@ const TheHeader = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <CIcon name="logo" height="48" alt="Logo"/>
+      <img src={eduLogo} alt="Edu management Logo" name="logo" height={75} alt="logo"/>
+        {/* <CIcon name="logo" height="48" alt="Logo"/> */}
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3" >
           <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
         </CHeaderNavItem>
-        <CHeaderNavItem  className="px-3">
+        {/* <CHeaderNavItem  className="px-3">
           <CHeaderNavLink to="/users">Users</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
           <CHeaderNavLink>Settings</CHeaderNavLink>
-        </CHeaderNavItem>
+        </CHeaderNavItem> */}
       </CHeaderNav>
-
+      <CHeaderNav className="px-3">
+        {userN.username}
+        <TheHeaderDropdown/>
+      </CHeaderNav>
       <CSubheader className="px-3 justify-content-between">
         <CBreadcrumbRouter 
           className="border-0 c-subheader-nav m-0 px-0 px-md-3" 

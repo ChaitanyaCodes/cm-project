@@ -1,101 +1,123 @@
-import React from 'react'
-import { CChartLine } from '@coreui/react-chartjs'
-import { getStyle, hexToRgba } from '@coreui/utils'
+import React from "react";
+import { CChartLine } from "@coreui/react-chartjs";
+import { hexToRgba } from "@coreui/utils";
 
-const brandSuccess = getStyle('success') || '#4dbd74'
-const brandInfo = getStyle('info') || '#20a8d8'
-const brandDanger = getStyle('danger') || '#f86c6b'
+const MainChartExample = (attributes) => {
+  const teacherDetails = attributes.teacherDetails;
+  console.log(teacherDetails);
+  // const random = (min, max) => {
+  //   return Math.floor(Math.random() * (max - min + 1) + min);
+  // };
 
-const MainChartExample = attributes => {
-  const random = (min, max)=>{
-    return Math.floor(Math.random() * (max - min + 1) + min)
-  }
+  const defaultDatasets = (() => {
+    var scoresDataArr = [];
 
-  const defaultDatasets = (()=>{
-    let elements = 27
-    const data1 = []
-    const data2 = []
-    const data3 = []
-    for (let i = 0; i <= elements; i++) {
-      data1.push(random(50, 200))
-      data2.push(random(80, 100))
-      data3.push(65)
-    }
-    return [
-      {
-        label: 'My First dataset',
-        backgroundColor: hexToRgba(brandInfo, 10),
-        borderColor: brandInfo,
-        pointHoverBackgroundColor: brandInfo,
-        borderWidth: 2,
-        data: data1
-      },
-      {
-        label: 'My Second dataset',
-        backgroundColor: 'transparent',
-        borderColor: brandSuccess,
-        pointHoverBackgroundColor: brandSuccess,
-        borderWidth: 2,
-        data: data2
-      },
-      {
-        label: 'My Third dataset',
-        backgroundColor: 'transparent',
-        borderColor: brandDanger,
-        pointHoverBackgroundColor: brandDanger,
-        borderWidth: 1,
-        borderDash: [8, 5],
-        data: data3
+    attributes.subjects.forEach((selectedSubject) => {
+      var temparr = [];
+
+      teacherDetails.subjects
+        .filter((subjectInfo) => subjectInfo.subjectName === selectedSubject)
+        .map((item, index) => {
+          if(item.year !== attributes.years[index]){
+            // console.log("year not present 0",item.subjectName);
+            temparr.push(0);
+            temparr.push(item.subjectAicteScore.$numberDecimal);
+          }else{
+            temparr.push(item.subjectAicteScore.$numberDecimal);
+            // console.log("year present")
+          }
+
+          // temparr.push(item.subjectAicteScore.$numberDecimal)
+        });
+
+      // for (let i = 0; i < attributes.years.length; i++) {
+      //   temparr.push(random(50, 200));
+      // }
+
+      scoresDataArr.push(temparr);
+    });
+
+    // get an array of arrays which have score of particular subject for
+    // console.log(scoresDataArr);
+
+    const subjectsLength = attributes.subjects.length;
+    var subjectArray = [];
+
+    // to get random color for each subject
+    function generateRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
       }
-    ]
-  })()
+      return color;
+    }
 
-  const defaultOptions = (()=>{
+    for (let subjectIndex = 0; subjectIndex < subjectsLength; subjectIndex++) {
+      var color = generateRandomColor();
+      subjectArray.push({
+        label: attributes.subjects[subjectIndex],
+        backgroundColor: hexToRgba(color, 10),
+        borderColor: color,
+        pointHoverBackgroundColor: color,
+        borderWidth: 2,
+        data: scoresDataArr[subjectIndex],
+      });
+    }
+
+    return subjectArray;
+  })();
+
+  const defaultOptions = (() => {
     return {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
+      maintainAspectRatio: false,
+      legend: {
+        display: false,
+      },
+      scales: {
+        xAxes: [
+          {
             gridLines: {
-              drawOnChartArea: false
-            }
-          }],
-          yAxes: [{
+              drawOnChartArea: false,
+            },
+          },
+        ],
+        yAxes: [
+          {
             ticks: {
               beginAtZero: true,
               maxTicksLimit: 5,
-              stepSize: Math.ceil(250 / 5),
-              max: 250
+              stepSize: Math.ceil(25 / 5),
+              max: 25,
             },
             gridLines: {
-              display: true
-            }
-          }]
+              display: true,
+            },
+          },
+        ],
+      },
+      elements: {
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3,
         },
-        elements: {
-          point: {
-            radius: 0,
-            hitRadius: 10,
-            hoverRadius: 4,
-            hoverBorderWidth: 3
-          }
-        }
-      }
-    }
-  )()
-
+      },
+    };
+  })();
   // render
   return (
     <CChartLine
       {...attributes}
       datasets={defaultDatasets}
       options={defaultOptions}
-      labels={['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']}
+      labels={attributes.years}
     />
-  )
-}
+  );
+};
 
+export default MainChartExample;
 
-export default MainChartExample
+//references
+// subjectArray[subjectIndex].label = attributes.subjects[subjectIndex];

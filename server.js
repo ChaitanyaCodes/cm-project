@@ -8,6 +8,8 @@ import userRoutes from "./routes/userRouter.js";
 import dotenv from "dotenv";
 import upCsv from "./routes/uploadCSV.js";
 import fetchData from "./routes/fetchData.js";
+import userData from "./routes/dashboardData.js";
+import activateAcc from "./routes/activateAcc.js";
 
 const __dirname = path.resolve();
 dotenv.config();
@@ -56,3 +58,5 @@ process.on("unhandledRejection", (err) => {
 app.use("/auth", userRoutes);
 app.use("/upload", upCsv);
 app.use("/fetch", fetchData);
+app.use("/dash", userData);
+app.use("/activate", activateAcc);

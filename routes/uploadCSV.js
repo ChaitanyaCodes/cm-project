@@ -7,7 +7,6 @@ import fileUpload from "express-fileupload";
 import path from "path";
 
 const __dirname = path.resolve();
-
 const router = express.Router();
 router.use(fileUpload());
 
@@ -16,15 +15,15 @@ var csvFilePath = "";
 var calcAvg = (inArray) => {
   var size = inArray.length;
   var sum = lodash.sum(inArray);
-  return parseFloat((sum / size).toFixed(3));
+  return parseFloat((sum / size).toFixed(2));
 };
 var calcOf45 = (totalOne, totalTwo, arr) => {
   var totalThree = lodash.sum(arr);
-  var total = parseFloat(totalOne + totalTwo + totalThree).toFixed(3);
+  var total = parseFloat(totalOne + totalTwo + totalThree).toFixed(2);
   return total;
 };
 var calcOf25 = (total) => {
-  return parseFloat((25 * total) / 45).toFixed(3);
+  return parseFloat((25 * total) / 45).toFixed(2);
 };
 router.post("/csv", async (req, res) => {
   try {
@@ -41,11 +40,11 @@ router.post("/csv", async (req, res) => {
         return res.status(500).send(err);
       }
     });
-    csvtojson()
+    await csvtojson()
       .fromFile(csvFilePath)
       .then(async (json) => {
         // form Common Details
-        var term = json[0].Term;
+        var term = json[1].Term;
         var teacherName = json[0].TeacherName;
         var subjectName = json[0].Subject;
         var year = parseInt(json[0].Year);
@@ -59,6 +58,14 @@ router.post("/csv", async (req, res) => {
         var arrOf25 = [];
         var oddTerm = "Odd";
         var evenTerm = "Even";
+
+        // File Upload Validation
+        const getTeacher = await Teacher.find({subjects: { $elemMatch: { year : year, subjectName : subjectName}}, fullName: teacherName});
+        if(getTeacher.length){
+          console.log("Data present");
+          res.status(400).json({ msg: "data already present" });
+        }
+        else{
         for (var count = 0; count < size; count++) {
           var effectivenessCount = 0;
           var supportCount = 0;
@@ -81,17 +88,20 @@ router.post("/csv", async (req, res) => {
           // Calculating Averages
           var effectivenessAvg = calcAvg(effectiveness);
           var supportAvg = calcAvg(support);
+          var extraAvg = calcAvg(extra);
           var totalOf45 = calcOf45(supportAvg, effectivenessAvg, extra);
           var totalOf25 = calcOf25(totalOf45);
           // console.log(totalOf25);
           arrOf25.push(parseFloat(totalOf25));
           var formInput = {
-			year,
+            teacherName,
+            year,
             effectiveness,
             support,
             extra,
             effectivenessAvg,
             supportAvg,
+            extraAvg,
             totalOf45,
             totalOf25,
           };
@@ -178,9 +188,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Pushed to oddSemAicteScore");
               }
+              //  else {
+              //   console.log("Pushed to oddSemAicteScore");
+              // }
             }
           );
         } else {
@@ -202,9 +213,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Pushed to evenSemAicteScore");
-              }
+              } 
+              // else {
+              //   console.log("Pushed to evenSemAicteScore");
+              // }
             }
           );
         }
@@ -246,9 +258,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Updated the OddSemAvg");
-              }
+              } 
+              // else {
+              //   console.log("Updated the OddSemAvg");
+              // }
             }
           );
 
@@ -281,9 +294,10 @@ router.post("/csv", async (req, res) => {
             function (err) {
               if (err) {
                 console.log(err);
-              } else {
-                console.log("Updated the evenSemAvg");
               }
+              // else {
+              //   console.log("Updated the evenSemAvg");
+              // }
             }
           );
           //getting AICET_SCORE
@@ -305,9 +319,10 @@ router.post("/csv", async (req, res) => {
 			      function (err) {
 			        if (err) {
 			          console.log(err);
-			        } else {
-			          console.log("Aicte score successfully set.");
 			        }
+              // else {
+			        //   console.log("Aicte score successfully set.");
+			        // }
 			      }
 			    );
 		  }
@@ -329,9 +344,10 @@ router.post("/csv", async (req, res) => {
 				function (err) {
 				  if (err) {
 					console.log(err);
-				  } else {
-					console.log("Aicte score successfully set.");
 				  }
+          // else {
+					// console.log("Aicte score successfully set.");
+				  // }
 				}
 			  );
 		  }
@@ -355,15 +371,66 @@ router.post("/csv", async (req, res) => {
 				function (err) {
 				  if (err) {
 					console.log(err);
-				  } else {
-					console.log("Aicte score successfully set.");
 				  }
+          // else {
+					// console.log("Updated AICTE score");
+				  // }
 				}
 			  );
 		  }
         });
+        // Adding Extra Score to teacher
+        const dbstudent = await Student.find(
+          {"formInput.teacherName": teacherName, "formInput.year": year}
+        );
+        var effectivenessAvgArray = [];
+        var supportAvgArray = [];
+        var extraAvgArray = [];
+        dbstudent.forEach(student => {
+          effectivenessAvgArray.push(parseFloat(student.formInput.effectivenessAvg));
+          supportAvgArray.push(parseFloat(student.formInput.supportAvg));
+          extraAvgArray.push(parseFloat(student.formInput.extraAvg));
+        });
+        var finalEffectivenessAvg = calcAvg(effectivenessAvgArray);
+        var finalSupportAvg = calcAvg(supportAvgArray);
+        var finalExtraAvg = calcAvg(extraAvgArray);
+        const avgDbTeacher = await Teacher.findOne({
+          aicteScores: { $elemMatch: { year: year } },
+          fullName: teacherName,
+        });
+        var aicteScoresArr = [];
+        aicteScoresArr = avgDbTeacher.aicteScores;
+        aicteScoresArr.forEach(async (object) => {
+          const updatingeffectivenessAvg = await Teacher.updateOne(
+            {
+              aicteScores: { $elemMatch: { year: year } },
+              fullName: teacherName,
+            },
+            {
+              $set: {
+                "aicteScores.$.effectivenessAvg": finalEffectivenessAvg,
+                "aicteScores.$.supportAvg": finalSupportAvg,
+                "aicteScores.$.extraAvg": finalExtraAvg,
+              },
+            },
+            {
+              new: true,
+              upsert: true, //updated if found insert if not found
+            },
+            function (err) {
+              if (err) {
+                console.log(err);
+              }
+              // else {
+              //   console.log("Updated Averages");
+              // }
+            }
+          );
+        });
+        console.log("File Uploaded");
         res.status(200).json({ errorMessage: "Data Stored" });
-      });
+      }
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ errorMessage: "File could not upload" });
