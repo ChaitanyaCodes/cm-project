@@ -39,7 +39,7 @@ const FileUpload = () => {
             if(err.response.status == 400) {
                 toast.error(err.response.data.msg);
             } else if(err.response.status == 500) {
-                toast.error("unable to move file");
+                toast.error(err.response.data.msg);
             }else if(err.response.status == 409){
                 console.log(err.response.data.msg);
                 toast.error(err.response.data.msg);
