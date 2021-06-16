@@ -19,6 +19,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, "client", "build")));
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 app.use(express.static("public"));
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
