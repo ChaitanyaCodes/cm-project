@@ -33,7 +33,7 @@ export default function SignUp() {
       };
 
       await axios.post(
-        "http://localhost:5000/auth/signup",
+        "/auth/signup",
         signUpData
       );
       await getLoggedIn();

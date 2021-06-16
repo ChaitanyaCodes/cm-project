@@ -25,7 +25,7 @@ export default function Login(){
           };
 
           await axios.post(
-            "http://localhost:5000/auth/login",
+            "/auth/login",
             loginData
           );            // .catch(console.log("access denied to wrong"))
           await getLoggedIn();

@@ -30,7 +30,7 @@ const TeacherScoresList = () => {
 
   useEffect(() => {
     const getTeachersData = async () => {
-      const teacherData = await axios("http://localhost:5000/fetch/teacher");
+      const teacherData = await axios("/fetch/teacher");
 
       setTeacherDataArr(teacherData.data);
     };
