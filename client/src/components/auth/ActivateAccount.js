@@ -22,7 +22,7 @@ function ActivateAccount() {
         }
         try {
             const res = await axios.post(
-                "http://localhost:5000/activate/acc",
+                "/activate/acc",
                 activationData
             );
             console.log(res);

@@ -23,7 +23,7 @@ const FileUpload = () => {
 
         try {
             console.log("before upload");
-            const res = await axios.post('http://localhost:5000/upload/csv', formData, {
+            const res = await axios.post('/upload/csv', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

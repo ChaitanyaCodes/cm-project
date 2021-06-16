@@ -8,7 +8,7 @@ function AuthContextProvider(props) {
 
   async function getLoggedIn() {
     const loggedInRes = await axios.get(
-      "http://localhost:5000/auth/loggedIn"
+      "/auth/loggedIn"
     );                                      // .catch(console.log("please try again"))
     setLoggedIn(loggedInRes.data);
   }
