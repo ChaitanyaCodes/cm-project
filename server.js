@@ -36,11 +36,9 @@ app.use(
 
 // database and port connection
 const CONNECTION_URI = process.env.DB;
-// port connection
-const PORT = process.env.PORT || 5000;
 mongoose
   .connect(CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+  .then(() => console.log('MongoDb Connected...'))
   .catch((error) => console.log(error.message));
 
 mongoose.set("useFindAndModify", false);
@@ -62,6 +60,10 @@ if(process.env.NODE_ENV === 'production'){
   });
 }
 
+// port connection
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 
 // handle error
 process.on("unhandledRejection", (err) => {
