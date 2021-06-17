@@ -14,7 +14,7 @@ import userData from "./routes/dashboardData.js";
 import activateAcc from "./routes/activateAcc.js";
 
 // initialize 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -36,9 +36,11 @@ app.use(
 
 // database and port connection
 const CONNECTION_URI = process.env.DB;
+// port connection
+const PORT = process.env.PORT || 5000;
 mongoose
   .connect(CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDb Connected...'))
+  .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
   .catch((error) => console.log(error.message));
 
 mongoose.set("useFindAndModify", false);
@@ -56,14 +58,10 @@ if(process.env.NODE_ENV === 'production'){
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
-// port connection
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
 
 // handle error
 process.on("unhandledRejection", (err) => {
