@@ -22,7 +22,7 @@ function WaitingPage() {
                         <br/>
                         <p className="mt-2 text-info">Request to create your account has been initiated.</p>
                         <p>Please contact Admin to get your account activated.</p>
-                        <a style={{marginLeft:'250px'}} className="mt-2 text-info" href="http://edumanagement.herokuapp.com/login">Login</a>
+                        <a style={{marginLeft:'250px'}} className="mt-2 text-info" href="https://edumanagement.herokuapp.com/login">Login</a>
 
                     </CCol>
                 </CRow>
