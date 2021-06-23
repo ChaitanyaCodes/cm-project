@@ -52,7 +52,7 @@ export default function SignUp() {
     <div className="bg-img">
       <form onSubmit={register}>
       <div className="container">
-        <h2 >Sign Up</h2>
+        <h2 className="text-dark" >Sign Up</h2>
         <select  className="s-my" name="role" id="role" onChange={selectHandler}
             value={role}>
             <option value="none" defaultChecked hidden>Select your role</option>

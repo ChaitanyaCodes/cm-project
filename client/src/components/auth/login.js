@@ -40,7 +40,7 @@ export default function Login(){
     <div className="bg-img">
         <form className="form" onSubmit={login}> 
             <div className="container">
-                <h2 className="s-my">Sign In</h2>
+                <h2 className="s-my text-dark">Sign In</h2>
                 <input
                     type="email"
                     name="email"
