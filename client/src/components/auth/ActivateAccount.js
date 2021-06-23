@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import activationIcon from '../../assets/imgs/activationIcon.svg'
 
 function ActivateAccount() {
-    let { token, name } = useParams();
+    let { token, name, roleName } = useParams();
 
     async function activate(){
         const activationData = {
@@ -45,7 +45,7 @@ function ActivateAccount() {
                         <br/>
                         <CButton style={{marginLeft:'200px'}} color="success" onClick={activate}>Activate Account</CButton>
                         <br/>
-                        <p className="mt-2 text-info">Click on the 'Activate Account' button to activate {name}'s Account.</p>
+                        <p className="mt-2 text-info">Click on the 'Activate Account' button to activate {name}'s Account for the role of {roleName}.</p>
                     </CCol>
                 </CRow>
             </CContainer>
