@@ -63,7 +63,7 @@ export default function Login(){
                     className="s-my large"
                 />
                 <button type="submit" className="s-my-btn">Sign in</button>
-                <Link to="/signup"><button type="submit" className="s-my-btn">Sign Up</button></Link>
+                <Link to="/signup">Sign Up</Link>
                 
                 <p>Copyright <span>&copy;</span> 2021</p>
             </div>
