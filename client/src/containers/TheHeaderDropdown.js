@@ -1,13 +1,9 @@
 import React from 'react'
 import {
-  CBadge,
   CDropdown,
-  CDropdownItem,
-  CDropdownMenu,
   CDropdownToggle,
   CImg
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 import avatar from '../assets/imgs/avatar.png';
 
 const TheHeaderDropdown = () => {
