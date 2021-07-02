@@ -14,7 +14,6 @@ export default function SignUp() {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
-  const [key, setKey] = useState("");
 
   const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
@@ -27,7 +26,6 @@ export default function SignUp() {
         email,
         password,
         confirmPwd,
-        key,
         fullName,
         role
       };
@@ -90,7 +88,9 @@ export default function SignUp() {
           {/* key goes here */}
           
           <button type="submit"  className="s-my-btn">Register</button>
-          <Link to="/login"><button type="submit" className="s-my-btn">Login</button></Link>
+          <Link to="/login">Login</Link>
+          <p>Copyright <span>&copy;</span> 2021</p>
+
         </div>
       </form>
       <ToastContainer />
