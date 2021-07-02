@@ -44,7 +44,7 @@ router.post("/csv", async (req, res) => {
       .fromFile(csvFilePath)
       .then(async (json) => {
         // form Common Details
-        var term = json[1].Term;
+        var term = json[0].Term;
         var teacherName = json[0].TeacherName;
         var subjectName = json[0].Subject;
         var year = parseInt(json[0].Year);

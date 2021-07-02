@@ -43,16 +43,26 @@ router.post("/signup", async (req, res) => {
       { expiresIn: "360m" }
     );
 
+    //role info 
+    var roleName = "";
+    if(role == 1){
+      roleName = "Student";
+    } else if(role == 2){
+      roleName = "Teacher";
+    } else if(role == 3){
+      roleName = "Admin";
+    }
+
     const data = {
       from: email,
       to: "buntytemkar6042@gmail.com",
       subject: "Account Activation Link",
       html: `<div style="background:#D3D3D3; text-align:center; width:35%; margin:auto; border-radius:10px; padding:10px;">
               <h2 style="color:black;">Please Activate Account</h2>
-              <a href='${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}'>
+              <a href='${process.env.CLIENT_URL}/auth/activate/${token}/${fullName}/${roleName}'>
                 <button style="background:green; color:white; padding:14px 16px; border-radius:5px; border:none;">Yes, Activate account</button>
               </a>
-              <p style="color:black;">Please confirm with ${fullName} and activate His/Her account.</p>
+              <p style="color:black;">Please confirm with ${fullName} and activate His/Her account for the role of ${roleName}.</p>
               <p style="color:black;">Ignore this email, If any of the staff member has not initiated this.</p>
             <div/>`,
     };

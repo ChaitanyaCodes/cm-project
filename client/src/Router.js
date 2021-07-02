@@ -23,7 +23,7 @@ function Router() {
     <BrowserRouter>
       <React.Suspense fallback={loading}>
         <Switch>
-          <Route exact path="/auth/activate/:token/:name" component={ActivateAccount}/>
+          <Route exact path="/auth/activate/:token/:name/:roleName" component={ActivateAccount}/>
           <Route exact path="/auth/waiting" component={WaitingPage}/>
           {loggedIn === false && (
             <>

@@ -14,7 +14,6 @@ export default function SignUp() {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
-  const [key, setKey] = useState("");
 
   const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
@@ -27,13 +26,12 @@ export default function SignUp() {
         email,
         password,
         confirmPwd,
-        key,
         fullName,
         role
       };
 
       await axios.post(
-        "http://localhost:5000/auth/signup",
+        "/auth/signup",
         signUpData
       );
       await getLoggedIn();
@@ -52,7 +50,7 @@ export default function SignUp() {
     <div className="bg-img">
       <form onSubmit={register}>
       <div className="container">
-        <h2 >Sign Up</h2>
+        <h2 className="text-dark" >Sign Up</h2>
         <select  className="s-my" name="role" id="role" onChange={selectHandler}
             value={role}>
             <option value="none" defaultChecked hidden>Select your role</option>
@@ -90,7 +88,9 @@ export default function SignUp() {
           {/* key goes here */}
           
           <button type="submit"  className="s-my-btn">Register</button>
-          <Link to="/login"><button type="submit" className="s-my-btn">Login</button></Link>
+          <Link to="/login">Login</Link>
+          <p>Copyright <span>&copy;</span> 2021</p>
+
         </div>
       </form>
       <ToastContainer />

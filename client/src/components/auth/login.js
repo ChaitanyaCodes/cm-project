@@ -25,7 +25,7 @@ export default function Login(){
           };
 
           await axios.post(
-            "http://localhost:5000/auth/login",
+            "/auth/login",
             loginData
           );            // .catch(console.log("access denied to wrong"))
           await getLoggedIn();
@@ -40,7 +40,7 @@ export default function Login(){
     <div className="bg-img">
         <form className="form" onSubmit={login}> 
             <div className="container">
-                <h2 className="s-my">Sign In</h2>
+                <h2 className="s-my text-dark">Sign In</h2>
                 <input
                     type="email"
                     name="email"
@@ -63,7 +63,7 @@ export default function Login(){
                     className="s-my large"
                 />
                 <button type="submit" className="s-my-btn">Sign in</button>
-                <Link to="/signup"><button type="submit" className="s-my-btn">Sign Up</button></Link>
+                <Link to="/signup">Sign Up</Link>
                 
                 <p>Copyright <span>&copy;</span> 2021</p>
             </div>
