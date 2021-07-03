@@ -54,7 +54,7 @@ const TheHeader = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
-      <img src={eduLogo} alt="Edu management Logo" name="logo" height={75} alt="logo"/>
+      <img src={eduLogo} alt="Edu management Logo" name="logo" height={75}/>
         {/* <CIcon name="logo" height="48" alt="Logo"/> */}
       </CHeaderBrand>
 

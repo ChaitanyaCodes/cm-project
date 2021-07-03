@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import WaitingIcon from '../../assets/imgs/waitingIcon.svg';
 import {
-    CButton,
     CContainer,
     CRow,
     CCol

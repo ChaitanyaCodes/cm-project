@@ -16,6 +16,7 @@
 
 form{
   width: 75%;
+  max-width: 28rem;
 }
 
 .container {
@@ -29,6 +30,13 @@ form{
   box-sizing: border-box;
   border-radius: 0.9rem;
   width: 80%; 
+  max-width: 20rem;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 17.0px );
+  -webkit-backdrop-filter: blur( 17.0px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 
@@ -82,8 +90,8 @@ select{
 button[type="submit"]{
   color: white;
   background-color: #FA6256;
-  width: 40%;
-  border-radius: 16px;
+  width: 50%;
+  border-radius: 2rem;
   padding: 1em;
   margin-bottom: 1rem;
   border: none;
@@ -127,12 +135,12 @@ p {
 
 @media screen and (max-width: 425px) {
   button[type="submit"] {
-    width: 60%;
+    width: 75%;
   }
 }
 
 @media screen and (min-width: 775px) {
   button[type="submit"] {
-    width: 30%;
+    width: 50%;
   }
 }
