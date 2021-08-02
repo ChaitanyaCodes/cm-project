@@ -1,13 +1,28 @@
 import React, { useState, useEffect} from 'react';
+import axios from 'axios';
 import ProfileDetails from './ProfileDetails';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+const useremail = cookies.get('useremail');
 
 function Profile() {
-    const user = {
-        _id: "60d2b863d6a1aa00157d0581",
-        fullName: "Administrator",
-        role: 3,
-        email: "admin@ems.com"
-    }
+    const [userId, setUserId] = useState(useremail);
+    const [user, setUser] = useState({
+        _id: "",
+        fullName: "",
+        role: "",
+        email: ""
+    })
+
+    useEffect(() => {
+        getUserDetails();
+    },[userId])
+
+
+    async function getUserDetails(){
+        const profileData = await axios("/auth/profile-details/" + userId);
+        setUser(profileData.data.userProfile);
+    };
 
     return (
         <div>
@@ -17,3 +32,5 @@ function Profile() {
 }
 
 export default Profile
+
+

@@ -2,12 +2,16 @@ import React, {useState, useEffect} from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
 function ProfileDetails(props) {
-  const [email, setEmail] = useState(props.user.email);
+  const [email, setEmail] = useState("");
   let [disabled, setDisabled] = useState("");
 
+  console.log(props);
+
   useEffect(() => {
+    setEmail(props.user.email);
+    console.log(props.user.email)
     setDisabled(true)
-  }, [])
+  },[props.user.email])
 
   function handleUpdateInit(e) {
     e.preventDefault();

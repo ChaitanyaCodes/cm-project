@@ -8,6 +8,8 @@ dotenv.config();
 const router = express.Router();
 const teacherKey = "welcometeacher";
 const adminKey = "manager";
+
+
 router.post("/signup", async (req, res) => {
   try {
     const { email, password, confirmPwd, fullName, role} = req.body;
@@ -112,7 +114,12 @@ router.post("/login", async (req, res) => {
     
     // set username cookie
     res
-      .cookie("username",existingUser.fullName)
+      .cookie("username",existingUser.fullName);
+
+      // set userId cookie
+    res
+    .cookie("useremail",existingUser.email);
+
     //send response to the client
     res
       .send("logged");
@@ -122,6 +129,25 @@ router.post("/login", async (req, res) => {
     res.status(500).send();
   }
 });
+
+// profile details 
+router.get("/profile-details/:email", async (req, res) => {
+  try{
+    let emailId = req.params.email
+    const user = await User.findOne({email: emailId});
+    var userProfile = {
+      "id": user._id,
+      "fullName": user.fullName,
+      "role": user.role,
+      "email": user.email
+    }
+    return res.status(200).json({ userProfile });
+}catch (error) {
+    console.error(error);
+    return res.status(500).json({ errorMessage: "Data Could Not Be Retrieved" });
+}
+});
+
 // logout
 router.use("/logout", (req, res) => {
   res
