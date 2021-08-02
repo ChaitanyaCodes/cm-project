@@ -29,7 +29,7 @@ export default function Login(){
             loginData
           );            // .catch(console.log("access denied to wrong"))
           await getLoggedIn();
-          history.push("/dashboard");
+          history.push("/dashboard")
         } catch (err) {
           toast.error(err.response.data.errorMessage);
           console.error(err.response.data.errorMessage);
