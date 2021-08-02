@@ -27,7 +27,7 @@ export default function Login(){
           await axios.post(
             "/auth/login",
             loginData
-          );            // .catch(console.log("access denied to wrong"))
+          );
           await getLoggedIn();
           history.push("/dashboard")
         } catch (err) {
@@ -62,7 +62,7 @@ export default function Login(){
                     value={password}
                     className="s-my large"
                 />
-                <button type="submit" className="s-my-btn">Sign in</button>
+                <button type="submit" className="s-my-btn button">Sign in</button>
                 <Link to="/signup">Sign Up</Link>
                 
                 <p>Copyright <span>&copy;</span> 2021</p>
