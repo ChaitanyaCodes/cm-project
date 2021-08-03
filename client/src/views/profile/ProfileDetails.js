@@ -107,15 +107,20 @@ function ProfileDetails(props) {
         </div>
 
         <div className="mb-3">
-          <button
+          {disabled? 
+            null :
+            <button
             type="submit"
             className="btn button btn-primary"
             style={{ maxWidth: "6rem", marginRight: "1rem" }}
             onClick={handleUpdate}
-          >
+            >
             Save
-          </button>
-          <button
+            </button>
+          }
+
+          {
+            disabled ? <button
             id="updateInit"
             type="button"
             className="btn button btn-primary"
@@ -123,7 +128,9 @@ function ProfileDetails(props) {
             onClick={handleUpdateInit}
           >
             Edit
-          </button>
+          </button> : null
+          }
+
           {disabled ? null : <button
             id="cancel"
             type="button"
@@ -133,6 +140,7 @@ function ProfileDetails(props) {
           >
             cancel
           </button>}
+
         </div>
         
       </form>
