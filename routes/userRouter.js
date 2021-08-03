@@ -97,11 +97,12 @@ router.patch('/update-mail/:id', async (req, res) => {
     // console.log(user);
     res
     .cookie("useremail",user.email);
-    
+
     res.status(200).send("hello");
     
   } catch (error) {
     console.log(error)
+    res.status(500).send();
   }
 });
 
