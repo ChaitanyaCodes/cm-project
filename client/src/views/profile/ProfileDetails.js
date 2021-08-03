@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
 
 function ProfileDetails(props) {
   const [email, setEmail] = useState("");
@@ -8,7 +9,6 @@ function ProfileDetails(props) {
 
   useEffect(() => {
     setEmail(props.user.email);
-    console.log(props.user.email)
     setDisabled(true)
   },[props.user.email])
 
@@ -48,15 +48,27 @@ function ProfileDetails(props) {
   async function handleUpdate(e) {
     e.preventDefault();
     try {
+
       if(validateEmail()){
-        const updateEmail = {
-          email
+        var updateEmailData = {
+          "email" : email
         };
       }
+
+      await axios.patch('/auth/update-mail/' + props.user.id, updateEmailData)
+      .then((res) => {
+
+        console.log(res);
+        console.log('email successfully updated');
+
+      }).catch((error) => {
+        console.log(error)
+      })
+
       toast.success("email updated successfully")
+
     } catch (err) {
-      toast.error(err.response.data.errorMessage);
-      console.error(err.response.data.errorMessage);
+      console.log(err); 
     }
   }
 

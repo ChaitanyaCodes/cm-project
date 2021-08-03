@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import ProfileDetails from './ProfileDetails';
 import Cookies from 'universal-cookie';
+
 const cookies = new Cookies();
 const useremail = cookies.get('useremail');
 

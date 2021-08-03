@@ -83,13 +83,37 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.patch('/update-mail/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updates = req.body
+    const optionNew = {new: true};
+
+    console.log(updates);
+    console.log(res);
+
+    // const user = await User.findByIdAndUpdate(id, updates, optionNew);
+
+    // console.log(user);
+    res
+    .cookie("useremail",user.email);
+    
+    res.status(200).send("hello");
+    
+  } catch (error) {
+    console.log(error)
+  }
+});
+
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     // login validate
     if (!email || !password)
       return res.status(400).json({ errorMessage: "Please Enter All fields." });
+
     const existingUser = await User.findOne({ email });
+
     if (!existingUser)
       return res.status(401).json({ errorMessage: "Wrong email or password" });
 
@@ -97,8 +121,10 @@ router.post("/login", async (req, res) => {
       password,
       existingUser.passwordHash
     );
+
     if (!correctPwd)
       return res.status(401).json({ errorMessage: "Wrong email or password" });
+
     // log user
     const token = jwt.sign(
       {
@@ -106,6 +132,7 @@ router.post("/login", async (req, res) => {
       },
       process.env.JWT_SECRET
     );
+
     // Send the token in a HTTP-only cookie
     res
       .cookie("token", token, {
