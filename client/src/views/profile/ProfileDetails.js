@@ -5,7 +5,6 @@ function ProfileDetails(props) {
   const [email, setEmail] = useState("");
   let [disabled, setDisabled] = useState("");
 
-  console.log(props);
 
   useEffect(() => {
     setEmail(props.user.email);
@@ -15,7 +14,7 @@ function ProfileDetails(props) {
 
   function handleUpdateInit(e) {
     e.preventDefault();
-    console.log(e.innerText);
+
     try {
       setDisabled(false);
     } catch (err) {
@@ -127,20 +126,3 @@ function ProfileDetails(props) {
 }
 
 export default ProfileDetails;
-
-{
-  /* <CCardBody>
-              <CForm action="" method="post">
-                <CFormGroup>
-                  <CLabel htmlFor="nf-email">Email</CLabel>
-                  <CInput type="email" id="nf-email" name="nf-email" placeholder="Enter Email.." autoComplete="email"/>
-                  <CFormText className="help-block">Please enter your email</CFormText>
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel htmlFor="nf-password">Password</CLabel>
-                  <CInput type="password" id="nf-password" name="nf-password" placeholder="Enter Password.." autoComplete="current-password"/>
-                  <CFormText className="help-block">Please enter your password</CFormText>
-                </CFormGroup>
-              </CForm>
-            </CCardBody> */
-}
