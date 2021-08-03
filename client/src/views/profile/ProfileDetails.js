@@ -65,6 +65,7 @@ function ProfileDetails(props) {
   return (
     <div>
       <form >
+
         <div class="mb-3">
           <label for="exampleInputEmail1" className="form-label" style={{textAlign: "left"}}>
             Full name:
@@ -78,6 +79,7 @@ function ProfileDetails(props) {
             disabled
           ></input>
         </div>
+
         <div className="mb-3">
           <label for="exampleInputPassword1" className="form-label" style={{textAlign: "left"}}>
             Email:
@@ -91,6 +93,7 @@ function ProfileDetails(props) {
             disabled={disabled}
           ></input>
         </div>
+
         <div className="mb-3">
           <button
             type="submit"
@@ -119,6 +122,7 @@ function ProfileDetails(props) {
             cancel
           </button>}
         </div>
+        
       </form>
       <ToastContainer/>
     </div>
