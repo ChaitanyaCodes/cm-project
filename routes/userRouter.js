@@ -90,15 +90,15 @@ router.patch('/update-mail/:id', async (req, res) => {
     const optionNew = {new: true};
 
     console.log(updates);
-    console.log(res);
 
-    // const user = await User.findByIdAndUpdate(id, updates, optionNew);
+    const user = await User.findByIdAndUpdate(id, updates, optionNew);
 
-    // console.log(user);
+    console.log(user);
+
     res
     .cookie("useremail",user.email);
 
-    res.status(200).send("hello");
+    res.status(200).send("email updated successfully");
     
   } catch (error) {
     console.log(error)
