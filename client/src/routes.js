@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
+const Profile = React.lazy(() => import('./views/profile/Profile'))
 
 
 // College mangement imports
@@ -22,6 +23,7 @@ const PromoteStudent = React.lazy(() => import('./views/student/PromoteStudent')
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/profile', name: 'Profile', component: Profile },
 
   // College management routes
 

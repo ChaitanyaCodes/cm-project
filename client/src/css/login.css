@@ -14,7 +14,7 @@
   height: 100%;
 }
 
-form{
+.form{
   width: 75%;
   max-width: 28rem;
 }
@@ -87,7 +87,7 @@ select{
   box-shadow: 0 0 0 4px #b9d3fa;
 }
 
-button[type="submit"]{
+.button{
   color: white;
   background-color: #FA6256;
   width: 50%;
@@ -99,7 +99,7 @@ button[type="submit"]{
   cursor: pointer;
 }
 
-button[type="submit"]:hover{
+.button:hover{
   background-color: #0244a8;
 }
 
