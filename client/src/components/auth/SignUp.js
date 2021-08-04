@@ -87,7 +87,7 @@ export default function SignUp() {
           </div>
           {/* key goes here */}
           
-          <button type="submit"  className="s-my-btn">Register</button>
+          <button type="submit"  className="s-my-btn button">Register</button>
           <Link to="/login">Login</Link>
           <p>Copyright <span>&copy;</span> 2021</p>
 
