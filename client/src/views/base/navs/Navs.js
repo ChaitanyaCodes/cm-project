@@ -147,7 +147,7 @@ const Navs = () => {
           </CCard>
         </CCol>
       </CRow>
-      <CRow>
+      <CRow> 
         <CCol xs="12">
           <CCard>
             <CCardHeader>
